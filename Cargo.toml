@@ -5,6 +5,9 @@ edition = "2018"
 authors = ["Jack Lloyd <jack@randombit.net>"]
 license = "Apache-2.0"
 description = "Wycheproof test vectors"
+repository = "https://github.com/randombit/wycheproof-rs"
+documentation = "https://docs.rs/wycheproof"
+categories = [ "cryptography" ]
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
