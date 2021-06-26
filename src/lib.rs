@@ -351,7 +351,8 @@ define_schema!(
 
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EcdsaVerifyTestFlag {
-    BER,
+    #[serde(rename = "BER")]
+    Ber,
     EdgeCase,
     GroupIsomorphism,
     MissingZero,
