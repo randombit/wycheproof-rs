@@ -1,6 +1,9 @@
 Wycheproof (Deserialized)
 ===========================
 
+[![crates.io](https://img.shields.io/crates/v/wycheproof.svg)](https://crates.io/crates/wycheproof)
+[![docs.rs](https://docs.rs/wycheproof/badge.svg)](https://docs.rs/wycheproof)
+
 Google's [Wycheproof](https://github.com/google/wycheproof) project is an
 immensely useful set of tests which cover common corner cases in cryptographic
 code.
