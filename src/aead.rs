@@ -29,6 +29,8 @@ pub enum TestFlag {
     ZeroLengthIv,
 }
 
+define_typeid!(TestGroupTypeId => "AeadTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
@@ -39,7 +41,7 @@ pub struct TestGroup {
     #[serde(rename = "tagSize")]
     pub tag_size: usize,
     #[serde(rename = "type")]
-    typ: String,
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

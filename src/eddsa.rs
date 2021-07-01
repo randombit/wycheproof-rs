@@ -12,6 +12,8 @@ pub enum TestFlag {
     SignatureMalleability,
 }
 
+define_typeid!(TestKeyTypeId => "EDDSAKeyPair");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
@@ -23,7 +25,7 @@ pub struct TestKey {
     #[serde(deserialize_with = "vec_from_hex")]
     pub sk: Vec<u8>,
     #[serde(rename = "type")]
-    typ: String, // check this
+    typ: TestKeyTypeId,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
@@ -39,6 +41,8 @@ pub struct TestKeyJwk {
     pub x: Vec<u8>,
 }
 
+define_typeid!(TestGroupTypeId => "EddsaVerify");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
@@ -49,7 +53,7 @@ pub struct TestGroup {
     #[serde(rename = "keyPem")]
     pub pem: String,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

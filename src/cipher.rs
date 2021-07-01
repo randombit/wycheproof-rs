@@ -11,6 +11,8 @@ pub enum TestFlag {
     BadPadding,
 }
 
+define_typeid!(TestGroupTypeId => "IndCpaTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
@@ -19,7 +21,7 @@ pub struct TestGroup {
     #[serde(rename = "keySize")]
     pub key_size: usize,
     #[serde(rename = "type")]
-    typ: String,
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

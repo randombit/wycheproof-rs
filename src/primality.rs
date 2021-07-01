@@ -13,11 +13,13 @@ pub enum TestFlag {
     WorstCaseMillerRabin,
 }
 
+define_typeid!(TestGroupTypeId => "PrimalityTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

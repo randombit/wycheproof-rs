@@ -11,13 +11,15 @@ pub enum TestFlag {
     EdgeCaseSiv,
 }
 
+define_typeid!(TestGroupTypeId => "DaeadTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
     #[serde(rename = "keySize")]
     pub key_size: usize,
     #[serde(rename = "type")]
-    typ: String,
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

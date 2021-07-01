@@ -30,6 +30,8 @@ pub enum TestFlag {
     SmallModulus,
 }
 
+define_typeid!(TestGroupTypeId => "RsaesOaepDecrypt");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
@@ -53,7 +55,7 @@ pub struct TestGroup {
     #[serde(rename = "sha")]
     pub hash: HashFunction,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

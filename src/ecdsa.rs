@@ -63,6 +63,8 @@ pub enum TestFlag {
     WeakHash,
 }
 
+define_typeid!(TestKeyTypeId => "EcPublicKey");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
@@ -70,7 +72,7 @@ pub struct TestKey {
     #[serde(rename = "keySize")]
     pub key_size: usize,
     #[serde(rename = "type")]
-    typ: String, // check this
+    typ: TestKeyTypeId,
     #[serde(deserialize_with = "vec_from_hex", rename = "uncompressed")]
     pub key: Vec<u8>,
     #[serde(deserialize_with = "vec_from_hex", rename = "wx")]
@@ -78,6 +80,8 @@ pub struct TestKey {
     #[serde(deserialize_with = "vec_from_hex", rename = "wy")]
     pub affine_y: Vec<u8>,
 }
+
+define_typeid!(TestGroupTypeId => "EcdsaVerify", "EcdsaP1363Verify");
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -91,7 +95,7 @@ pub struct TestGroup {
     #[serde(rename = "sha")]
     pub hash: HashFunction,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

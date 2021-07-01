@@ -22,6 +22,8 @@ define_test_set_names!(
     Vmac128 => "vmac_128"
 );
 
+define_typeid!(TestGroupTypeId => "MacTest", "MacWithIvTest");
+
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum TestFlag {
     InvalidNonce,
@@ -37,7 +39,7 @@ pub struct TestGroup {
     #[serde(rename = "ivSize")]
     pub nonce_size: Option<usize>,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

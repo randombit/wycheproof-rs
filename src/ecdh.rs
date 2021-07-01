@@ -49,13 +49,15 @@ pub enum EcdhEncoding {
     EcPoint,
 }
 
+define_typeid!(TestGroupTypeId => "EcdhTest", "EcdhEcpointTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
     pub curve: EllipticCurve,
     pub encoding: EcdhEncoding,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

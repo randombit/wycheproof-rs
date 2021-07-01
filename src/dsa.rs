@@ -24,6 +24,8 @@ pub enum TestFlag {
     NoLeadingZero,
 }
 
+define_typeid!(TestKeyTypeId => "DsaPublicKey");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
@@ -36,10 +38,12 @@ pub struct TestKey {
     #[serde(deserialize_with = "vec_from_hex")]
     pub q: Vec<u8>,
     #[serde(rename = "type")]
-    typ: String, // check this
+    typ: TestKeyTypeId,
     #[serde(deserialize_with = "vec_from_hex")]
     pub y: Vec<u8>,
 }
+
+define_typeid!(TestGroupTypeId => "DsaVerify", "DsaP1363Verify");
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -52,7 +56,7 @@ pub struct TestGroup {
     #[serde(rename = "sha")]
     pub hash: HashFunction,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

@@ -16,12 +16,14 @@ pub enum TestFlag {
     ZeroSharedSecret,
 }
 
+define_typeid!(TestGroupTypeId => "XdhComp");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
     pub curve: MontgomeryCurve,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

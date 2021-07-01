@@ -104,6 +104,26 @@ fn vec_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>
     base64_decode(s, URL_SAFE).map_err(D::Error::custom)
 }
 
+macro_rules! define_typeid {
+    ( $name:ident => $( $tag:expr ),* ) => {
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
+        struct $name {}
+
+        impl<'de> Deserialize<'de> for $name {
+            fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+                let s: &str = Deserialize::deserialize(deserializer)?;
+
+                match s {
+                    $(
+                        $tag => Ok(Self {}),
+                    )*
+                    unknown => Err(D::Error::custom(format!("unexpected type {} for {}", unknown, stringify!($name)))),
+                }
+            }
+        }
+    }
+}
+
 macro_rules! define_test_set_names {
     ( $( $enum_name:ident => $test_name:expr ),* ) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
@@ -158,7 +178,7 @@ macro_rules! define_test_set {
 
                 match s {
                     $(
-                        $schema_name => Ok(SchemaType {}),
+                        $schema_name => Ok(Self {}),
                     )*
                         unknown => Err(D::Error::custom(format!("unknown {} schema {}", $schema_type, unknown))),
                 }

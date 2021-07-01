@@ -13,6 +13,8 @@ pub enum TestFlag {
     InvalidPkcs1Padding,
 }
 
+define_typeid!(TestGroupTypeId => "RsaesPkcs1Decrypt");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
@@ -31,7 +33,7 @@ pub struct TestGroup {
     #[serde(rename = "privateKeyPem")]
     pub pem: String,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 

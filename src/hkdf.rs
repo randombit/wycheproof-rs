@@ -15,13 +15,15 @@ pub enum TestFlag {
     SizeTooLarge,
 }
 
+define_typeid!(TestGroupTypeId => "HkdfTest");
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestGroup {
     #[serde(rename = "keySize")]
     pub key_size: usize,
     #[serde(rename = "type")]
-    typ: String, // todo enum/check
+    typ: TestGroupTypeId,
     pub tests: Vec<Test>,
 }
 
