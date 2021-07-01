@@ -1,5 +1,5 @@
 
-## 0.2.0
+## 0.2.0 2021-07-01
 
 * Add `TestName` enums to allow better typechecking
 * Split up into several modules; now everything is of the form
