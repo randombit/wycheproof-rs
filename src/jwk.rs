@@ -1,5 +1,10 @@
 use super::*;
 
+fn vec_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D::Error> {
+    let s: &str = Deserialize::deserialize(deserializer)?;
+    base64::decode_config(s, base64::URL_SAFE).map_err(D::Error::custom)
+}
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EcdsaPublicJwk {
@@ -47,4 +52,17 @@ pub struct RsaPrivateJwk {
     pub q: Vec<u8>,
     #[serde(deserialize_with = "vec_from_base64")]
     pub qi: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EddsaJwk {
+    #[serde(rename = "crv")]
+    pub curve: EdwardsCurve,
+    #[serde(deserialize_with = "vec_from_base64")]
+    pub d: Vec<u8>,
+    pub kid: String,
+    pub kty: String,
+    #[serde(deserialize_with = "vec_from_base64")]
+    pub x: Vec<u8>,
 }

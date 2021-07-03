@@ -1,6 +1,10 @@
+//! RSA PKCS1v1.5 decryption tests
+
 use super::*;
 
 define_test_set!("RSA PKCS1 decrypt", "rsaes_pkcs1_decrypt_schema.json");
+
+define_algorithm_map!("RSAES-PKCS1-v1_5" => RsaPkcs1v15Encryption);
 
 define_test_set_names!(
     Rsa2048 => "rsa_pkcs1_2048",
@@ -8,10 +12,7 @@ define_test_set_names!(
     Rsa4096 => "rsa_pkcs1_4096"
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    InvalidPkcs1Padding,
-}
+define_test_flags!(InvalidPkcs1Padding);
 
 define_typeid!(TestGroupTypeId => "RsaesPkcs1Decrypt");
 
@@ -37,16 +38,4 @@ pub struct TestGroup {
     pub tests: Vec<Test>,
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub comment: String,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub msg: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub ct: Vec<u8>,
-    pub result: TestResult,
-    pub flags: Vec<TestFlag>,
-}
+define_test!(msg: Vec<u8>, ct: Vec<u8>);

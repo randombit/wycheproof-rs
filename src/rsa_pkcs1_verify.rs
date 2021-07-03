@@ -1,6 +1,10 @@
+//! RSA PKCS1v1.5 verification tests
+
 use super::*;
 
 define_test_set!("RSA PKCS1 verify", "rsassa_pkcs1_verify_schema.json");
+
+define_algorithm_map!("RSASSA-PKCS1-v1_5" => RsaPkcs1v15);
 
 define_test_set_names!(
     Rsa2048Sha224 => "rsa_signature_2048_sha224",
@@ -26,12 +30,7 @@ define_test_set_names!(
     RsaMisc => "rsa_signature"
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    MissingNull,
-    SmallPublicKey,
-    SmallModulus,
-}
+define_test_flags!(MissingNull, SmallPublicKey, SmallModulus);
 
 define_typeid!(TestGroupTypeId => "RsassaPkcs1Verify");
 
@@ -59,16 +58,4 @@ pub struct TestGroup {
     pub tests: Vec<Test>,
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub comment: String,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub msg: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub sig: Vec<u8>,
-    pub result: TestResult,
-    pub flags: Vec<TestFlag>,
-}
+define_test!(msg: Vec<u8>, sig: Vec<u8>);
