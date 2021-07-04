@@ -1,4 +1,10 @@
 
+## 0.3.0 2021-07-04
+
+* `TestSet::algorithm` is now an enumeration
+* `TestSet::header` is now a `String` instead of a `Vec<String>`
+* Add many macros to reduce code duplication
+
 ## 0.2.0 2021-07-01
 
 * Add `TestName` enums to allow better typechecking
