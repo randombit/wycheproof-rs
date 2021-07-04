@@ -58,17 +58,19 @@
 //! }
 //! ```
 
-use serde::{de::Error, Deserialize, Deserializer};
+#![forbid(unsafe_code)]
 
-use base64::{decode_config as base64_decode, URL_SAFE};
-use hex::decode as hex_decode;
+use serde::{de::Error, Deserialize, Deserializer};
 use std::collections::HashMap;
 
 /// The error type
 #[derive(Debug)]
 pub enum WycheproofError {
+    /// Named data set was not found
     NoDataSet,
+    /// The JSON parsed but was found to be invalid somehow
     InvalidData,
+    /// The JSON parsing failed
     ParsingFailed(Box<dyn std::error::Error>),
 }
 
@@ -86,7 +88,7 @@ impl std::error::Error for WycheproofError {}
 
 fn vec_from_hex<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D::Error> {
     let s: &str = Deserialize::deserialize(deserializer)?;
-    hex_decode(s).map_err(D::Error::custom)
+    hex::decode(s).map_err(D::Error::custom)
 }
 
 #[derive(Debug, Deserialize)]
@@ -99,9 +101,10 @@ fn opt_vec_from_hex<'de, D: Deserializer<'de>>(
     owv.map(|ow: Option<WrappedHexVec>| ow.map(|w: WrappedHexVec| w.0))
 }
 
-fn vec_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D::Error> {
-    let s: &str = Deserialize::deserialize(deserializer)?;
-    base64_decode(s, URL_SAFE).map_err(D::Error::custom)
+fn combine_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
+    let h: Vec<String> = Deserialize::deserialize(deserializer)?;
+    let combined = h.join(" ");
+    Ok(combined)
 }
 
 macro_rules! define_typeid {
@@ -124,8 +127,20 @@ macro_rules! define_typeid {
     }
 }
 
+macro_rules! define_algorithm_map {
+    ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        pub enum Algorithm {
+            $(
+                #[serde(rename = $json_str)]
+                $enum_elem,
+            )*
+        }
+    }
+}
+
 macro_rules! define_test_set_names {
-    ( $( $enum_name:ident => $test_name:expr ),* ) => {
+    ( $( $enum_name:ident => $test_name:expr ),* $(,)?) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
         pub enum TestName {
             $(
@@ -166,36 +181,89 @@ macro_rules! define_test_set_names {
     }
 }
 
+macro_rules! define_test_flags {
+    ( $( $flag:ident ),* $(,)?) => {
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        pub enum TestFlag {
+            $(
+                $flag,
+            )*
+        }
+    }
+}
+
+macro_rules! define_test_group {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty ),* $(,)?) => {
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        pub struct TestGroup {
+            $(
+            $(#[serde(rename = $json_name)])?
+            pub $field_name: $type,
+            )*
+            #[serde(rename = "type")]
+            typ: TestGroupTypeId,
+            pub tests: Vec<Test>,
+        }
+    }
+}
+
+macro_rules! define_test {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty ),* $(,)?) => {
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        pub struct Test {
+            #[serde(rename = "tcId")]
+            pub tc_id: usize,
+            pub comment: String,
+            $(
+            #[serde(deserialize_with = "vec_from_hex")]
+            $(#[serde(rename = $json_name)])?
+            pub $field_name: $type,
+            )*
+            pub result: TestResult,
+            #[serde(default)]
+            pub flags: Vec<TestFlag>,
+        }
+    }
+}
+
 macro_rules! define_test_set {
     ( $schema_type:expr, $( $schema_name:expr ),* ) => {
 
-        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
-        struct SchemaType {}
+        #[derive(Debug, Clone, Hash, Eq, PartialEq)]
+        pub struct TestSchema {
+            pub schema: String,
+        }
 
-        impl<'de> Deserialize<'de> for SchemaType {
+        impl<'de> Deserialize<'de> for TestSchema {
             fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
                 let s: &str = Deserialize::deserialize(deserializer)?;
 
                 match s {
                     $(
-                        $schema_name => Ok(Self {}),
+                        $schema_name => Ok(Self { schema: s.to_string() }),
                     )*
                         unknown => Err(D::Error::custom(format!("unknown {} schema {}", $schema_type, unknown))),
                 }
             }
         }
 
+        #[doc = "A group of "]
+        #[doc = $schema_type]
+        #[doc = " tests."]
         #[derive(Debug, Clone, Eq, PartialEq, Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestSet {
-            pub algorithm: String,
+            pub algorithm: Algorithm,
             #[serde(rename = "generatorVersion")]
             pub generator_version: String,
             #[serde(rename = "numberOfTests")]
             pub number_of_tests: usize,
-            pub header: Vec<String>,
+            #[serde(deserialize_with = "combine_header")]
+            pub header: String,
             pub notes: HashMap<TestFlag, String>,
-            schema: SchemaType,
+            schema: TestSchema,
             #[serde(rename = "testGroups")]
             pub test_groups: Vec<TestGroup>,
         }
@@ -223,15 +291,20 @@ macro_rules! define_test_set {
 /// The expected result of a Wycheproof test
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum TestResult {
+    /// The test is expected to pass
     #[serde(rename = "valid")]
     Valid,
+    /// The test is expected to fail
     #[serde(rename = "invalid")]
     Invalid,
+    /// The test is allowed to pass but may reasonably fail for policy reasons
+    /// (eg for a valid signature when the hash function used is too weak)
     #[serde(rename = "acceptable")]
     Acceptable,
 }
 
 impl TestResult {
+    /// Return true if this test *must* fail
     pub fn must_fail(&self) -> bool {
         match self {
             Self::Valid => false,
@@ -241,6 +314,7 @@ impl TestResult {
     }
 }
 
+/// Prime order elliptic curves
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EllipticCurve {
     #[serde(rename = "secp224r1")]
@@ -280,6 +354,7 @@ pub enum EllipticCurve {
     Brainpool512t1,
 }
 
+/// Hash Function identifiers
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum HashFunction {
     #[serde(rename = "SHA-1")]
@@ -310,12 +385,14 @@ pub enum HashFunction {
     Sha3_512,
 }
 
+/// MGF identifiers
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum Mgf {
     #[serde(rename = "MGF1")]
     Mgf1,
 }
 
+/// Edwards curves
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EdwardsCurve {
     #[serde(alias = "edwards25519")]
@@ -324,6 +401,7 @@ pub enum EdwardsCurve {
     Ed448,
 }
 
+/// Montgomery curves
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum MontgomeryCurve {
     #[serde(alias = "curve25519")]

@@ -1,3 +1,5 @@
+//! Message Authentication Code tests
+
 use super::*;
 
 define_test_set!(
@@ -19,29 +21,33 @@ define_test_set_names!(
     HmacSha3_512 => "hmac_sha3_512",
     Gmac => "gmac",
     Vmac64 => "vmac_64",
-    Vmac128 => "vmac_128"
+    Vmac128 => "vmac_128",
+);
+
+define_algorithm_map!(
+    "AES-CMAC" => AesCmac,
+    "AES-GMAC" => AesGmac,
+    "HMACSHA1" => HmacSha1,
+    "HMACSHA224" => HmacSha224,
+    "HMACSHA256" => HmacSha256,
+    "HMACSHA384" => HmacSha384,
+    "HMACSHA512" => HmacSha512,
+    "HMACSHA3-224" => HmacSha3_224,
+    "HMACSHA3-256" => HmacSha3_256,
+    "HMACSHA3-384" => HmacSha3_384,
+    "HMACSHA3-512" => HmacSha3_512,
+    "VMAC-AES" => VmacAes,
 );
 
 define_typeid!(TestGroupTypeId => "MacTest", "MacWithIvTest");
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    InvalidNonce,
-}
+define_test_flags!(InvalidNonce);
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(rename = "keySize")]
-    pub key_size: usize,
-    #[serde(rename = "tagSize")]
-    pub tag_size: usize,
-    #[serde(rename = "ivSize")]
-    pub nonce_size: Option<usize>,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    "keySize" => key_size: usize,
+    "tagSize" => tag_size: usize,
+    "ivSize" => nonce_size: Option<usize>,
+);
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]

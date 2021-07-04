@@ -1,3 +1,5 @@
+//! RSA OAEP decryption tests
+
 use super::*;
 
 define_test_set!("RSA OAEP decrypt", "rsaes_oaep_decrypt_schema.json");
@@ -23,12 +25,9 @@ define_test_set_names!(
     RsaMisc => "rsa_oaep_misc"
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    Constructed,
-    InvalidOaepPadding,
-    SmallModulus,
-}
+define_algorithm_map!("RSAES-OAEP" => RsaOaep);
+
+define_test_flags!(Constructed, InvalidOaepPadding, SmallModulus);
 
 define_typeid!(TestGroupTypeId => "RsaesOaepDecrypt");
 
@@ -59,18 +58,4 @@ pub struct TestGroup {
     pub tests: Vec<Test>,
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub comment: String,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub msg: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub ct: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub label: Vec<u8>,
-    pub result: TestResult,
-    pub flags: Vec<TestFlag>,
-}
+define_test!(msg: Vec<u8>, ct: Vec<u8>, label: Vec<u8>);

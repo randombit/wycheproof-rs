@@ -1,42 +1,25 @@
-use super::*;
+//! NIST keywrapping tests
 
-define_test_set_names!(
-    KeyWrap => "kw",
-    KeyWrapWithPadding => "kwp"
-);
+use super::*;
 
 define_test_set!("Keywrap", "keywrap_test_schema.json");
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    SmallKey,
-    WeakWrapping,
-}
+define_test_set_names!(
+    KeyWrap => "kw",
+    KeyWrapWithPadding => "kwp",
+);
+
+define_algorithm_map!(
+    "KW" => KeyWrap,
+    "KWP" => KeyWrapWithPadding,
+);
+
+define_test_flags!(SmallKey, WeakWrapping);
 
 define_typeid!(TestGroupTypeId => "KeywrapTest");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(rename = "keySize")]
-    pub key_size: usize,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    "keySize" => key_size: usize,
+);
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub comment: String,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub msg: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub ct: Vec<u8>,
-    pub result: TestResult,
-    pub flags: Vec<TestFlag>,
-}
+define_test!(key: Vec<u8>, msg: Vec<u8>, ct: Vec<u8>);
