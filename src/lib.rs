@@ -229,6 +229,26 @@ macro_rules! define_test {
     }
 }
 
+macro_rules! define_test_ex {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        pub struct Test {
+            #[serde(rename = "tcId")]
+            pub tc_id: usize,
+            pub comment: String,
+            $(
+            $(#[serde(deserialize_with = $deser_fn)])?
+            $(#[serde(rename = $json_name)])?
+            pub $field_name: $type,
+            )*
+            pub result: TestResult,
+            #[serde(default)]
+            pub flags: Vec<TestFlag>,
+        }
+    }
+}
+
 macro_rules! define_test_set {
     ( $schema_type:expr, $( $schema_name:expr ),* ) => {
 
