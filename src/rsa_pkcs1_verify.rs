@@ -34,28 +34,15 @@ define_test_flags!(MissingNull, SmallPublicKey, SmallModulus);
 
 define_typeid!(TestGroupTypeId => "RsassaPkcs1Verify");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub e: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyAsn")]
-    pub asn_key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyDer")]
-    pub der: Vec<u8>,
-    #[serde(rename = "keyJwk")]
-    pub jwk: Option<RsaPublicJwk>,
-    #[serde(rename = "keyPem")]
-    pub pem: String,
-    #[serde(rename = "keysize")]
-    pub key_size: usize,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub n: Vec<u8>,
-    #[serde(rename = "sha")]
-    pub hash: HashFunction,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    e: Vec<u8> | "vec_from_hex",
+    "keyAsn" => asn_key: Vec<u8> | "vec_from_hex",
+    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "keyJwk" => jwk: Option<RsaPublicJwk>,
+    "keyPem" => pem: String,
+    "keysize" => key_size: usize,
+    n: Vec<u8> | "vec_from_hex",
+    "sha" => hash: HashFunction,
+);
 
 define_test!(msg: Vec<u8>, sig: Vec<u8>);

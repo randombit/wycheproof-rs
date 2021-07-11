@@ -31,18 +31,11 @@ pub struct TestKey {
 
 define_typeid!(TestGroupTypeId => "EddsaVerify");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    pub jwk: Option<EddsaJwk>,
-    pub key: TestKey,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyDer")]
-    pub der: Vec<u8>,
-    #[serde(rename = "keyPem")]
-    pub pem: String,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    jwk: Option<EddsaJwk>,
+    key: TestKey,
+    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "keyPem" => pem: String,
+);
 
 define_test!(msg: Vec<u8>, sig: Vec<u8>);

@@ -91,16 +91,6 @@ fn vec_from_hex<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D
     hex::decode(s).map_err(D::Error::custom)
 }
 
-#[derive(Debug, Deserialize)]
-struct WrappedHexVec(#[serde(deserialize_with = "vec_from_hex")] Vec<u8>);
-
-fn opt_vec_from_hex<'de, D: Deserializer<'de>>(
-    deserializer: D,
-) -> Result<Option<Vec<u8>>, D::Error> {
-    let owv = Option::<WrappedHexVec>::deserialize(deserializer);
-    owv.map(|ow: Option<WrappedHexVec>| ow.map(|w: WrappedHexVec| w.0))
-}
-
 fn combine_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
     let h: Vec<String> = Deserialize::deserialize(deserializer)?;
     let combined = h.join(" ");
@@ -193,11 +183,12 @@ macro_rules! define_test_flags {
 }
 
 macro_rules! define_test_group {
-    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty ),* $(,)?) => {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
         #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestGroup {
             $(
+            $(#[serde(deserialize_with = $deser_fn)])?
             $(#[serde(rename = $json_name)])?
             pub $field_name: $type,
             )*
@@ -218,6 +209,26 @@ macro_rules! define_test {
             pub comment: String,
             $(
             #[serde(deserialize_with = "vec_from_hex")]
+            $(#[serde(rename = $json_name)])?
+            pub $field_name: $type,
+            )*
+            pub result: TestResult,
+            #[serde(default)]
+            pub flags: Vec<TestFlag>,
+        }
+    }
+}
+
+macro_rules! define_test_ex {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        pub struct Test {
+            #[serde(rename = "tcId")]
+            pub tc_id: usize,
+            pub comment: String,
+            $(
+            $(#[serde(deserialize_with = $deser_fn)])?
             $(#[serde(rename = $json_name)])?
             pub $field_name: $type,
             )*
@@ -423,6 +434,7 @@ pub mod eddsa;
 pub mod hkdf;
 pub mod keywrap;
 pub mod mac;
+pub mod mac_with_iv;
 pub mod primality;
 pub mod rsa_oaep;
 pub mod rsa_pkcs1_decrypt;
