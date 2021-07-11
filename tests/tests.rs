@@ -69,6 +69,13 @@ fn test_mac_parsing() {
 }
 
 #[test]
+fn test_mac_with_iv_parsing() {
+    for test in wycheproof::mac_with_iv::TestName::all() {
+        let _kat = wycheproof::mac_with_iv::TestSet::load(test).unwrap();
+    }
+}
+
+#[test]
 fn test_primality_parsing() {
     for test in wycheproof::primality::TestName::all() {
         let _kat = wycheproof::primality::TestSet::load(test).unwrap();

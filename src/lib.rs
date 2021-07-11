@@ -91,16 +91,6 @@ fn vec_from_hex<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D
     hex::decode(s).map_err(D::Error::custom)
 }
 
-#[derive(Debug, Deserialize)]
-struct WrappedHexVec(#[serde(deserialize_with = "vec_from_hex")] Vec<u8>);
-
-fn opt_vec_from_hex<'de, D: Deserializer<'de>>(
-    deserializer: D,
-) -> Result<Option<Vec<u8>>, D::Error> {
-    let owv = Option::<WrappedHexVec>::deserialize(deserializer);
-    owv.map(|ow: Option<WrappedHexVec>| ow.map(|w: WrappedHexVec| w.0))
-}
-
 fn combine_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
     let h: Vec<String> = Deserialize::deserialize(deserializer)?;
     let combined = h.join(" ");
@@ -444,6 +434,7 @@ pub mod eddsa;
 pub mod hkdf;
 pub mod keywrap;
 pub mod mac;
+pub mod mac_with_iv;
 pub mod primality;
 pub mod rsa_oaep;
 pub mod rsa_pkcs1_decrypt;
