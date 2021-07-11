@@ -87,20 +87,12 @@ pub struct TestKey {
 
 define_typeid!(TestGroupTypeId => "EcdsaVerify", "EcdsaP1363Verify");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    pub jwk: Option<EcdsaPublicJwk>,
-    pub key: TestKey,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyDer")]
-    pub der: Vec<u8>,
-    #[serde(rename = "keyPem")]
-    pub pem: String,
-    #[serde(rename = "sha")]
-    pub hash: HashFunction,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    jwk: Option<EcdsaPublicJwk>,
+    key: TestKey,
+    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "keyPem" => pem: String,
+    "sha" => hash: HashFunction,
+);
 
 define_test!(msg: Vec<u8>, sig: Vec<u8>);

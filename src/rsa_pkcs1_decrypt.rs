@@ -16,26 +16,14 @@ define_test_flags!(InvalidPkcs1Padding);
 
 define_typeid!(TestGroupTypeId => "RsaesPkcs1Decrypt");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub d: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub e: Vec<u8>,
-    #[serde(rename = "keysize")]
-    pub key_size: usize,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub n: Vec<u8>,
-    #[serde(rename = "privateKeyJwk")]
-    pub jwk: Option<RsaPrivateJwk>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "privateKeyPkcs8")]
-    pub pkcs8: Vec<u8>,
-    #[serde(rename = "privateKeyPem")]
-    pub pem: String,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    d: Vec<u8> | "vec_from_hex",
+    e: Vec<u8> | "vec_from_hex",
+    "keysize" => key_size: usize,
+    n: Vec<u8> | "vec_from_hex",
+    "privateKeyJwk" => jwk: Option<RsaPrivateJwk>,
+    "privateKeyPkcs8" => pkcs8: Vec<u8> | "vec_from_hex",
+    "privateKeyPem" => pem: String,
+);
 
 define_test!(msg: Vec<u8>, ct: Vec<u8>);

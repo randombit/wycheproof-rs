@@ -22,31 +22,17 @@ define_test_flags!(WeakHash);
 
 define_typeid!(TestGroupTypeId => "RsassaPssVerify");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub e: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyAsn")]
-    pub asn_key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyDer")]
-    pub der: Vec<u8>,
-    #[serde(rename = "keyPem")]
-    pub pem: String,
-    #[serde(rename = "keysize")]
-    pub key_size: usize,
-    pub mgf: Mgf,
-    #[serde(rename = "mgfSha")]
-    pub mgf_hash: HashFunction,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub n: Vec<u8>,
-    #[serde(rename = "sLen")]
-    pub salt_length: usize,
-    #[serde(rename = "sha")]
-    pub hash: HashFunction,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    e: Vec<u8> | "vec_from_hex",
+    "keyAsn" => asn_key: Vec<u8> | "vec_from_hex",
+    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "keyPem" => pem: String,
+    "keysize" => key_size: usize,
+    mgf: Mgf,
+    "mgfSha" => mgf_hash: HashFunction,
+    n: Vec<u8> | "vec_from_hex",
+    "sLen" => salt_length: usize,
+    "sha" => hash: HashFunction,
+);
 
 define_test!(msg: Vec<u8>, sig: Vec<u8>);

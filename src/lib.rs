@@ -193,11 +193,12 @@ macro_rules! define_test_flags {
 }
 
 macro_rules! define_test_group {
-    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty ),* $(,)?) => {
+    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
         #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestGroup {
             $(
+            $(#[serde(deserialize_with = $deser_fn)])?
             $(#[serde(rename = $json_name)])?
             pub $field_name: $type,
             )*

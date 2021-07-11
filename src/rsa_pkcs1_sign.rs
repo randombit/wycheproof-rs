@@ -12,36 +12,19 @@ define_test_flags!(SmallPublicKey, SmallModulus, WeakHash);
 
 define_typeid!(TestGroupTypeId => "RsassaPkcs1Generate");
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestGroup {
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub d: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub e: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyAsn")]
-    pub asn_key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "keyDer")]
-    pub der: Vec<u8>,
-    #[serde(rename = "keyJwk")]
-    pub public_jwk: Option<RsaPublicJwk>,
-    #[serde(rename = "privateKeyJwk")]
-    pub private_jwk: Option<RsaPrivateJwk>,
-    #[serde(rename = "keyPem")]
-    pub public_pem: String,
-    #[serde(rename = "privateKeyPem")]
-    pub private_pem: String,
-    #[serde(rename = "privateKeyPkcs8")]
-    pub private_pkcs8: String,
-    #[serde(rename = "keysize")]
-    pub key_size: usize,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub n: Vec<u8>,
-    #[serde(rename = "sha")]
-    pub hash: HashFunction,
-    #[serde(rename = "type")]
-    typ: TestGroupTypeId,
-    pub tests: Vec<Test>,
-}
+define_test_group!(
+    d: Vec<u8> | "vec_from_hex",
+    e: Vec<u8> | "vec_from_hex",
+    "keyAsn" => asn_key: Vec<u8> | "vec_from_hex",
+    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "keyJwk" => public_jwk: Option<RsaPublicJwk>,
+    "privateKeyJwk" => private_jwk: Option<RsaPrivateJwk>,
+    "keyPem" => public_pem: String,
+    "privateKeyPem" => private_pem: String,
+    "privateKeyPkcs8" => private_pkcs8: String,
+    "keysize" => key_size: usize,
+    n: Vec<u8> | "vec_from_hex",
+    "sha" => hash: HashFunction,
+);
 
 define_test!(msg: Vec<u8>, sig: Vec<u8>);
