@@ -13,8 +13,8 @@ in Rust to deserialize the JSON formatted Wycheproof tests so they can be used
 to test some code. This crate was born out of a desire to never ever have to do
 this again. It also does all the nice things I wanted but didn't have the time
 to do on previous attempts, like decoding the hex and base64 during
-deserializion, using enums to aid type checking, verifies that schemas match the
-expected one, etc.
+deserialization, using enums to aid type checking, verifying that schemas match
+the expected one, etc.
 
 Comments and patches are welcome.
 
