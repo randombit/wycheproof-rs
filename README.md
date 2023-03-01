@@ -16,6 +16,10 @@ to do on previous attempts, like decoding the hex and base64 during
 deserialization, using enums to aid type checking, verifying that schemas match
 the expected one, etc.
 
+The minimum supported Rust version (MSRV) of this crate is currently Rust 1.57.0.
+If the MSRV increases in the future, this will be accompanied by an increment to
+the minor version number.
+
 Comments and patches are welcome.
 
 This crate is licensed Apache 2.0-only, just as Wycheproof itself is.  The files

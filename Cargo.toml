@@ -8,6 +8,7 @@ description = "Wycheproof test vectors"
 repository = "https://github.com/randombit/wycheproof-rs"
 documentation = "https://docs.rs/wycheproof"
 categories = [ "cryptography" ]
+rust-version = "1.57"
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }

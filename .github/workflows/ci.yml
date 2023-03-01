@@ -8,33 +8,31 @@ on:
 
 jobs:
   rustfmt:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: nightly
-          profile: minimal
           components: rustfmt
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - run: cargo fmt -- --check
   clippy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: nightly
-          profile: minimal
           components: clippy
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - run: cargo clippy -- --deny warnings
+      - run: cargo +nightly clippy -- --deny warnings
   ci:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -42,17 +40,13 @@ jobs:
       matrix:
         include:
           - toolchain: stable
-            target: x86_64-unknown-linux-gnu
           - toolchain: beta
-            target: x86_64-unknown-linux-gnu
           - toolchain: nightly
-            target: x86_64-unknown-linux-gnu
+          - toolchain: 1.57.0 # MSRV
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
         with:
-          override: true
-          target: ${{ matrix.target }}
           toolchain: ${{ matrix.toolchain }}
       - run: cargo test
