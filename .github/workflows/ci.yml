@@ -42,7 +42,7 @@ jobs:
           - toolchain: stable
           - toolchain: beta
           - toolchain: nightly
-          - toolchain: 1.43.0 # MSRV
+          - toolchain: 1.57.0 # MSRV
 
     steps:
       - uses: actions/checkout@v3
