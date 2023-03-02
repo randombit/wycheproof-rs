@@ -2,6 +2,10 @@
 
 * Update the Wycheproof test data to the new set released on
   2023-02-27. This set removes the daead and pkcs1_sign tests.
+* Various types within the tests that were Vec<u8> are now
+  wrapped in LargeInteger or ByteString types
+* Add num-bigint feature for converting LargeInteger into
+  a num_bigint::BigUint
 * Previously no MSRV was set for this crate. It is now 1.57.0
 * Use 2021 Edition
 
