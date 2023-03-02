@@ -100,10 +100,10 @@ define_test_group!(
 );
 
 define_test!(
-    key: Vec<u8>,
-    "iv" => nonce: Vec<u8>,
-    aad: Vec<u8>,
-    "msg" => pt: Vec<u8>,
-    ct: Vec<u8>,
-    tag: Vec<u8>,
+    key: ByteString,
+    "iv" => nonce: ByteString,
+    aad: ByteString,
+    "msg" => pt: ByteString,
+    ct: ByteString,
+    tag: ByteString,
 );

@@ -40,4 +40,4 @@ define_test_group!(
     "keySize" => key_size: usize,
 );
 
-define_test!(key: Vec<u8>, msg: Vec<u8>, ct: Vec<u8>);
+define_test!(key: ByteString, msg: ByteString, ct: ByteString);

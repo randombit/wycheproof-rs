@@ -43,27 +43,23 @@ define_typeid!(TestKeyTypeId => "DsaPublicKey");
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub g: Vec<u8>,
+    pub g: LargeInteger,
     #[serde(rename = "keySize")]
     pub key_size: usize,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub p: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub q: Vec<u8>,
+    pub p: LargeInteger,
+    pub q: LargeInteger,
     #[serde(rename = "type")]
     typ: TestKeyTypeId,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub y: Vec<u8>,
+    pub y: LargeInteger,
 }
 
 define_typeid!(TestGroupTypeId => "DsaVerify", "DsaP1363Verify");
 
 define_test_group!(
     "publicKey" => key: TestKey,
-    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
     "sha" => hash: HashFunction,
 );
 
-define_test!(msg: Vec<u8>, sig: Vec<u8>);
+define_test!(msg: ByteString, sig: ByteString);

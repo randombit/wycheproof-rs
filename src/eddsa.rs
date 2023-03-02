@@ -35,8 +35,7 @@ pub struct TestKey {
     pub curve: EdwardsCurve,
     #[serde(rename = "keySize")]
     pub key_size: usize,
-    #[serde(deserialize_with = "vec_from_hex")]
-    pub pk: Vec<u8>,
+    pub pk: ByteString,
     #[serde(rename = "type")]
     typ: TestKeyTypeId,
 }
@@ -46,8 +45,8 @@ define_typeid!(TestGroupTypeId => "EddsaVerify");
 define_test_group!(
     "publicKeyJwk" => jwk: EddsaPublicJwk,
     "publicKey" => key: TestKey,
-    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
 );
 
-define_test!(msg: Vec<u8>, sig: Vec<u8>);
+define_test!(msg: ByteString, sig: ByteString);

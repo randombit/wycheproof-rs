@@ -28,8 +28,8 @@ define_test_group!(
 );
 
 define_test!(
-    iv: Vec<u8>,
-    key: Vec<u8>,
-    "msg" => pt: Vec<u8>,
-    ct: Vec<u8>,
+    iv: ByteString,
+    key: ByteString,
+    "msg" => pt: ByteString,
+    ct: ByteString,
 );

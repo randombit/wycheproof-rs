@@ -43,19 +43,9 @@ define_test_group!(
     radix: usize,
 );
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub comment: String,
-    pub result: TestResult,
-    #[serde(deserialize_with = "vec_from_hex")]
-    key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    tweak: Vec<u8>,
+define_test!(
+    key: ByteString,
+    tweak: ByteString,
     msg: Vec<isize>,
     ct: Vec<usize>,
-    #[serde(default)]
-    pub flags: Vec<TestFlag>,
-}
+);

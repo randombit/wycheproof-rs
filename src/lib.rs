@@ -6,11 +6,13 @@
 //! This crate is a convenient repacking of the Wycheproof JSON-formatted test
 //! data with deserialization to easily usable structs.
 //!
-//! Hex and base64 encoded data is all decoded to binary `Vec<u8>` for your
-//! convenience. Large integers (such as those used in the primality tests) are
-//! left as big-endian byte arrays rather than being decoded to `num_bigint` due
-//! to the proliferation of different multi-precision integers libraries in use
-//! in the Rust ecosystem.
+//! Hex and base64 encoded data is decoded to binary in the `BinaryString`
+//! struct which is a light wrapper around `Vec<u8>`.
+//!
+//! Large integers (such as those used in the RSA test data) are decoded as
+//! big-endian byte arrays into a `LargeInteger` struct, which is again a light
+//! wrapper around `Vec<u8>`. Additionally if the `num-bigint` feature is enabled,
+//! this type also gains a conversion function to `num_bigint::BigUint`.
 //!
 //! Each submodule of this crate includes a set of structs: a `TestName` which
 //! specifies which individual test is desired, a `TestSet` which is the set of
@@ -62,6 +64,7 @@
 
 use serde::{de::Error, Deserialize, Deserializer};
 use std::collections::HashMap;
+use std::fmt;
 
 /// The error type
 #[derive(Debug)]
@@ -243,27 +246,6 @@ macro_rules! define_test {
             pub tc_id: usize,
             pub comment: String,
             $(
-            #[serde(deserialize_with = "vec_from_hex")]
-            $(#[serde(rename = $json_name)])?
-            pub $field_name: $type,
-            )*
-            pub result: TestResult,
-            #[serde(default)]
-            pub flags: Vec<TestFlag>,
-        }
-    }
-}
-
-macro_rules! define_test_ex {
-    ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
-        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-        #[serde(deny_unknown_fields)]
-        pub struct Test {
-            #[serde(rename = "tcId")]
-            pub tc_id: usize,
-            pub comment: String,
-            $(
-            $(#[serde(deserialize_with = $deser_fn)])?
             $(#[serde(rename = $json_name)])?
             pub $field_name: $type,
             )*
@@ -477,6 +459,75 @@ pub enum MontgomeryCurve {
     X25519,
     #[serde(alias = "curve448")]
     X448,
+}
+
+#[derive(Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(transparent)]
+pub struct ByteString {
+    #[serde(deserialize_with = "vec_from_hex")]
+    value: Vec<u8>,
+}
+
+impl ByteString {
+    pub fn len(&self) -> usize {
+        self.value.len()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.value.is_empty()
+    }
+}
+
+impl fmt::Debug for ByteString {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "\"{}\"", hex::encode(&self.value))
+    }
+}
+
+impl std::ops::Deref for ByteString {
+    type Target = Vec<u8>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
+}
+
+impl AsRef<[u8]> for ByteString {
+    fn as_ref(&self) -> &[u8] {
+        &self.value
+    }
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(transparent)]
+pub struct LargeInteger {
+    #[serde(deserialize_with = "vec_from_hex")]
+    value: Vec<u8>,
+}
+
+impl std::ops::Deref for LargeInteger {
+    type Target = Vec<u8>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
+}
+
+impl AsRef<[u8]> for LargeInteger {
+    fn as_ref(&self) -> &[u8] {
+        &self.value
+    }
+}
+
+impl LargeInteger {
+    fn new(value: Vec<u8>) -> Self {
+        Self { value }
+    }
+
+    #[cfg(feature = "num-bigint")]
+    pub fn as_num_bigint(&self) -> num_bigint::BigUint {
+        num_bigint::BigUint::from_bytes_be(&self.value)
+    }
 }
 
 mod jwk;

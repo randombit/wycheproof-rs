@@ -34,8 +34,8 @@ define_test_group!(
 );
 
 define_test!(
-    key: Vec<u8>,
-    "iv" => nonce: Vec<u8>,
-    msg: Vec<u8>,
-    tag: Vec<u8>,
+    key: ByteString,
+    "iv" => nonce: ByteString,
+    msg: ByteString,
+    tag: ByteString,
 );

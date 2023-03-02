@@ -36,4 +36,5 @@ define_typeid!(TestGroupTypeId => "PrimalityTest");
 
 define_test_group!();
 
-define_test!(value: Vec<u8>);
+// Not a LargeInteger because actually 2s-complement
+define_test!(value: ByteString);

@@ -31,30 +31,30 @@ define_typeid!(TestGroupTypeId => "RsaesPkcs1Decrypt");
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
-    #[serde(deserialize_with = "vec_from_hex", rename = "publicExponent")]
-    e: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "privateExponent")]
-    d: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "modulus")]
-    n: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "prime1")]
-    p: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "prime2")]
-    q: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "exponent1")]
-    d1: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "exponent2")]
-    d2: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "coefficient")]
-    c: Vec<u8>,
+    #[serde(rename = "publicExponent")]
+    e: LargeInteger,
+    #[serde(rename = "privateExponent")]
+    d: LargeInteger,
+    #[serde(rename = "modulus")]
+    n: LargeInteger,
+    #[serde(rename = "prime1")]
+    p: LargeInteger,
+    #[serde(rename = "prime2")]
+    q: LargeInteger,
+    #[serde(rename = "exponent1")]
+    d1: LargeInteger,
+    #[serde(rename = "exponent2")]
+    d2: LargeInteger,
+    #[serde(rename = "coefficient")]
+    c: LargeInteger,
 }
 
 define_test_group!(
     "privateKey" => key: TestKey,
     "keySize" => key_size: usize,
     "privateKeyJwk" => jwk: Option<RsaPrivateJwk>,
-    "privateKeyPkcs8" => pkcs8: Vec<u8> | "vec_from_hex",
+    "privateKeyPkcs8" => pkcs8: ByteString,
     "privateKeyPem" => pem: String,
 );
 
-define_test!(msg: Vec<u8>, ct: Vec<u8>);
+define_test!(msg: ByteString, ct: ByteString);
