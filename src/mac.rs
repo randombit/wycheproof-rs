@@ -63,4 +63,4 @@ define_test_group!(
     "tagSize" => tag_size: usize,
 );
 
-define_test!(key: Vec<u8>, msg: Vec<u8>, tag: Vec<u8>,);
+define_test!(key: ByteString, msg: ByteString, tag: ByteString,);

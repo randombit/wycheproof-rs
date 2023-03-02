@@ -18,30 +18,15 @@ define_algorithm_map!(
 
 define_test_group!();
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Test {
-    #[serde(rename = "tcId")]
-    pub tc_id: usize,
-    pub name: String,
-    pub oid: String,
-    pub comment: Option<String>,
-    #[serde(rename = "ref")]
-    pub reference: String,
-    #[serde(deserialize_with = "vec_from_hex")]
-    p: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    n: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    a: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    b: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    gx: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex")]
-    gy: Vec<u8>,
+define_test!(
+    name: String,
+    oid: String,
+    "ref" => reference: String,
+    p: LargeInteger,
+    n: LargeInteger,
+    a: LargeInteger,
+    b: LargeInteger,
+    gx: LargeInteger,
+    gy: LargeInteger,
     h: usize,
-    #[serde(default)]
-    pub flags: Vec<TestFlag>,
-    pub result: TestResult,
-}
+);

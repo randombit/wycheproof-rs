@@ -60,16 +60,16 @@ define_typeid!(TestGroupTypeId => "RsassaPssVerify", "RsassaPssWithParametersVer
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestKey {
-    #[serde(deserialize_with = "vec_from_hex", rename = "publicExponent")]
-    e: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "modulus")]
-    n: Vec<u8>,
+    #[serde(rename = "publicExponent")]
+    e: LargeInteger,
+    #[serde(rename = "modulus")]
+    n: LargeInteger,
 }
 
 define_test_group!(
     "publicKey" => key: TestKey,
-    "publicKeyAsn" => asn_key: Vec<u8> | "vec_from_hex",
-    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKeyAsn" => asn_key: ByteString,
+    "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
     "publicKeyJwk" => jwk: Option<RsaPublicJwk>,
     "keySize" => key_size: usize,
@@ -79,4 +79,4 @@ define_test_group!(
     "sha" => hash: HashFunction,
 );
 
-define_test!(msg: Vec<u8>, sig: Vec<u8>);
+define_test!(msg: ByteString, sig: ByteString);

@@ -32,10 +32,10 @@ define_test_group!(
     "keySize" => key_size: usize,
 );
 
-define_test_ex!(
-    ikm: Vec<u8> | "vec_from_hex",
-    salt: Vec<u8> | "vec_from_hex",
-    info: Vec<u8> | "vec_from_hex",
+define_test!(
+    ikm: ByteString,
+    salt: ByteString,
+    info: ByteString,
     size: usize,
-    okm: Vec<u8> | "vec_from_hex",
+    okm: ByteString,
 );

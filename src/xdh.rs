@@ -31,7 +31,7 @@ define_typeid!(TestGroupTypeId => "XdhComp");
 define_test_group!(curve: MontgomeryCurve);
 
 define_test!(
-    "public" => public_key: Vec<u8>,
-    "private" => private_key: Vec<u8>,
-    "shared" => shared_secret: Vec<u8>,
+    "public" => public_key: ByteString,
+    "private" => private_key: ByteString,
+    "shared" => shared_secret: ByteString,
 );

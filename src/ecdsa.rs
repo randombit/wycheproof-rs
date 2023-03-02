@@ -125,12 +125,12 @@ pub struct TestKey {
     pub key_size: usize,
     #[serde(rename = "type")]
     typ: TestKeyTypeId,
-    #[serde(deserialize_with = "vec_from_hex", rename = "uncompressed")]
-    pub key: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "wx")]
-    pub affine_x: Vec<u8>,
-    #[serde(deserialize_with = "vec_from_hex", rename = "wy")]
-    pub affine_y: Vec<u8>,
+    #[serde(rename = "uncompressed")]
+    pub key: ByteString,
+    #[serde(rename = "wx")]
+    pub affine_x: LargeInteger,
+    #[serde(rename = "wy")]
+    pub affine_y: LargeInteger,
 }
 
 define_typeid!(TestGroupTypeId => "EcdsaVerify", "EcdsaP1363Verify", "EcdsaBitcoinVerify");
@@ -138,9 +138,9 @@ define_typeid!(TestGroupTypeId => "EcdsaVerify", "EcdsaP1363Verify", "EcdsaBitco
 define_test_group!(
     "publicKeyJwk" => jwk: Option<EcdsaPublicJwk>,
     "publicKey" => key: TestKey,
-    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
     "sha" => hash: HashFunction,
 );
 
-define_test!(msg: Vec<u8>, sig: Vec<u8>);
+define_test!(msg: ByteString, sig: ByteString);
