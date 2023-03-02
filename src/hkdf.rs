@@ -18,7 +18,13 @@ define_algorithm_map!(
     "HKDF-SHA-512" => HkdfSha512,
 );
 
-define_test_flags!(EmptySalt, SizeTooLarge);
+define_test_flags!(
+    EmptySalt,
+    MaximalOutputSize,
+    Normal,
+    OutputCollision,
+    SizeTooLarge,
+);
 
 define_typeid!(TestGroupTypeId => "HkdfTest");
 

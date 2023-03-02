@@ -120,6 +120,7 @@ macro_rules! define_typeid {
 macro_rules! define_algorithm_map {
     ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[allow(non_camel_case_types)]
         pub enum Algorithm {
             $(
                 #[serde(rename = $json_str)]
@@ -132,6 +133,7 @@ macro_rules! define_algorithm_map {
 macro_rules! define_test_set_names {
     ( $( $enum_name:ident => $test_name:expr ),* $(,)?) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[allow(non_camel_case_types)]
         pub enum TestName {
             $(
                 $enum_name,
@@ -169,6 +171,39 @@ macro_rules! define_test_set_names {
             }
         }
     }
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum BugType {
+    AuthBypass,
+    Basic,
+    BerEncoding,
+    CanOfWorms,
+    Confidentiality,
+    Defined,
+    EdgeCase,
+    Functionality,
+    KnownBug,
+    Legacy,
+    Malleability,
+    MissingStep,
+    ModifiedParameter,
+    SignatureMalleability,
+    Unknown,
+    WeakParams,
+    WrongPrimitive,
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TestFlagInfo {
+    #[serde(rename = "bugType")]
+    pub bug_type: BugType,
+    pub description: Option<String>,
+    pub effect: Option<String>,
+    pub cves: Option<Vec<String>>,
+    pub links: Option<Vec<String>>,
 }
 
 macro_rules! define_test_flags {
@@ -273,7 +308,7 @@ macro_rules! define_test_set {
             pub number_of_tests: usize,
             #[serde(deserialize_with = "combine_header")]
             pub header: String,
-            pub notes: HashMap<TestFlag, String>,
+            pub notes: HashMap<TestFlag, TestFlagInfo>,
             schema: TestSchema,
             #[serde(rename = "testGroups")]
             pub test_groups: Vec<TestGroup>,
@@ -328,6 +363,16 @@ impl TestResult {
 /// Prime order elliptic curves
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EllipticCurve {
+    #[serde(rename = "secp160r1")]
+    Secp160r1,
+    #[serde(rename = "secp160r2")]
+    Secp160r2,
+    #[serde(rename = "secp160k1")]
+    Secp160k1,
+    #[serde(rename = "secp192r1")]
+    Secp192r1,
+    #[serde(rename = "secp192k1")]
+    Secp192k1,
     #[serde(rename = "secp224r1")]
     Secp224r1,
     #[serde(rename = "secp256r1", alias = "P-256")]
@@ -368,6 +413,9 @@ pub enum EllipticCurve {
 /// Hash Function identifiers
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum HashFunction {
+    #[serde(rename = "")]
+    None,
+
     #[serde(rename = "SHA-1")]
     Sha1,
 
@@ -394,6 +442,12 @@ pub enum HashFunction {
     Sha3_384,
     #[serde(rename = "SHA3-512")]
     Sha3_512,
+
+    #[serde(rename = "SHAKE128")]
+    Shake128,
+
+    #[serde(rename = "SHAKE256")]
+    Shake256,
 }
 
 /// MGF identifiers
@@ -401,6 +455,10 @@ pub enum HashFunction {
 pub enum Mgf {
     #[serde(rename = "MGF1")]
     Mgf1,
+    #[serde(rename = "SHAKE128")]
+    Shake128,
+    #[serde(rename = "SHAKE256")]
+    Shake256,
 }
 
 /// Edwards curves
@@ -426,11 +484,13 @@ pub use jwk::*;
 
 pub mod aead;
 pub mod cipher;
-pub mod daead;
 pub mod dsa;
+pub mod ec_curve;
 pub mod ecdh;
 pub mod ecdsa;
 pub mod eddsa;
+pub mod fpe_list;
+pub mod fpe_str;
 pub mod hkdf;
 pub mod keywrap;
 pub mod mac;
@@ -438,7 +498,6 @@ pub mod mac_with_iv;
 pub mod primality;
 pub mod rsa_oaep;
 pub mod rsa_pkcs1_decrypt;
-pub mod rsa_pkcs1_sign;
 pub mod rsa_pkcs1_verify;
 pub mod rsa_pss_verify;
 pub mod xdh;

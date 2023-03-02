@@ -5,7 +5,7 @@ use super::*;
 define_test_set!("MAC with IV", "mac_with_iv_test_schema.json");
 
 define_test_set_names!(
-    Gmac => "gmac",
+    Gmac => "aes_gmac",
     Vmac64 => "vmac_64",
     Vmac128 => "vmac_128",
 );
@@ -17,7 +17,15 @@ define_algorithm_map!(
 
 define_typeid!(TestGroupTypeId => "MacWithIvTest");
 
-define_test_flags!(InvalidNonce);
+define_test_flags!(
+    EdgeCase,
+    InvalidNonce,
+    Ktv,
+    ModifiedTag,
+    Pseudorandom,
+    SpecialCaseTag,
+    TagCollision,
+);
 
 define_test_group!(
     "keySize" => key_size: usize,

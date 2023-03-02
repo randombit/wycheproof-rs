@@ -24,24 +24,50 @@ define_test_set_names!(
     Rsa3072Sha384 => "rsa_signature_3072_sha384",
     Rsa3072Sha512_256 => "rsa_signature_3072_sha512_256",
     Rsa3072Sha512 => "rsa_signature_3072_sha512",
+    Rsa4096Sha256 => "rsa_signature_4096_sha256",
     Rsa4096Sha384 => "rsa_signature_4096_sha384",
     Rsa4096Sha512_256 => "rsa_signature_4096_sha512_256",
     Rsa4096Sha512 => "rsa_signature_4096_sha512",
-    RsaMisc => "rsa_signature"
+    Rsa8192Sha256 => "rsa_signature_8192_sha256",
+    Rsa8192Sha384 => "rsa_signature_8192_sha384",
+    Rsa8192Sha512 => "rsa_signature_8192_sha512",
 );
 
-define_test_flags!(MissingNull, SmallPublicKey, SmallModulus);
+define_test_flags!(
+    BerEncodedPadding,
+    EdgeCaseSignature,
+    InvalidAsnInPadding,
+    InvalidPadding,
+    InvalidSignature,
+    MissingNull,
+    ModifiedPadding,
+    NoHash,
+    ShortPadding,
+    SignatureMalleability,
+    SmallPublicKey,
+    SmallSignature,
+    WrongHash,
+    WrongPrimitive,
+);
 
 define_typeid!(TestGroupTypeId => "RsassaPkcs1Verify");
 
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TestKey {
+    #[serde(deserialize_with = "vec_from_hex", rename = "publicExponent")]
+    e: Vec<u8>,
+    #[serde(deserialize_with = "vec_from_hex", rename = "modulus")]
+    n: Vec<u8>,
+}
+
 define_test_group!(
-    e: Vec<u8> | "vec_from_hex",
-    "keyAsn" => asn_key: Vec<u8> | "vec_from_hex",
-    "keyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKey" => key: TestKey,
+    "publicKeyAsn" => asn_key: Vec<u8> | "vec_from_hex",
+    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
     "keyJwk" => jwk: Option<RsaPublicJwk>,
-    "keyPem" => pem: String,
-    "keysize" => key_size: usize,
-    n: Vec<u8> | "vec_from_hex",
+    "publicKeyPem" => pem: String,
+    "keySize" => key_size: usize,
     "sha" => hash: HashFunction,
 );
 
