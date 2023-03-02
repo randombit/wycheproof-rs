@@ -1,3 +1,10 @@
+## 0.5.0 Not Yet Released
+
+* Update the Wycheproof test data to the new set released on
+  2023-02-27. This set removes the daead and pkcs1_sign tests.
+* Previously no MSRV was set for this crate. It is now 1.57.0
+* Use 2021 Edition
+
 ## 0.4.0 2021-07-11
 
 * Split the `mac` tests into `mac` and `mac_with_iv` to better
