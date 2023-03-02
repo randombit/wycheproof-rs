@@ -12,9 +12,16 @@ define_test_set_names!(
 define_algorithm_map!("XDH" => Xdh);
 
 define_test_flags!(
+    EdgeCaseMultiplication,
+    EdgeCasePrivateKey,
+    EdgeCaseShared,
+    Ktv,
     LowOrderPublic,
     NonCanonicalPublic,
+    Normal,
+    PublicKeyTooLong,
     SmallPublicKey,
+    SpecialPublicKey,
     Twist,
     ZeroSharedSecret,
 );

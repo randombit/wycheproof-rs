@@ -25,23 +25,43 @@ define_test_set_names!(
     EcdhSecp256r1Ecpoint => "ecdh_secp256r1_ecpoint",
     EcdhSecp384r1Ecpoint => "ecdh_secp384r1_ecpoint",
     EcdhSecp521r1Ecpoint => "ecdh_secp521r1_ecpoint",
-    EcdhMisc => "ecdh"
 );
 
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[allow(non_camel_case_types)]
 pub enum TestFlag {
-    AddSubChain,
-    #[allow(non_camel_case_types)]
+    AdditionChain,
+    #[serde(rename = "CVE-2017-8932")]
+    CVE_2017_8932,
+    #[serde(rename = "CVE_2017_10176")]
     CVE_2017_10176,
     CompressedPoint,
-    GroupIsomorphism,
+    CompressedPublic,
+    EdgeCaseDoubling,
+    EdgeCaseEphemeralKey,
+    EdgeCaseSharedSecret,
     InvalidAsn,
+    InvalidCompressedPublic,
+    InvalidCurveAttack,
+    InvalidEncoding,
     InvalidPublic,
+    InvalidPem,
     IsomorphicPublicKey,
+    GroupIsomorphism,
+    LargeCofactor,
+    #[serde(rename = "Modified curve parameter")]
+    ModifiedCurveParameter,
+    ModifiedCofactor,
+    ModifiedGenerator,
+    ModifiedGroup,
     ModifiedPrime,
+    ModifiedPublicPoint,
+    NegativeCofactor,
+    Normal,
     UnnamedCurve,
     UnusedParam,
     WeakPublicKey,
+    WrongCurve,
     WrongOrder,
 }
 

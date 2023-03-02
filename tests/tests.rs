@@ -13,13 +13,6 @@ fn test_cipher_parsing() {
 }
 
 #[test]
-fn test_daead_parsing() {
-    for test in wycheproof::daead::TestName::all() {
-        let _kat = wycheproof::daead::TestSet::load(test).unwrap();
-    }
-}
-
-#[test]
 fn test_dsa_parsing() {
     for test in wycheproof::dsa::TestName::all() {
         let _kat = wycheproof::dsa::TestSet::load(test).unwrap();
@@ -44,6 +37,27 @@ fn test_ecdsa_parsing() {
 fn test_eddsa_parsing() {
     for test in wycheproof::eddsa::TestName::all() {
         let _kat = wycheproof::eddsa::TestSet::load(test).unwrap();
+    }
+}
+
+#[test]
+fn test_ec_curve_parsing() {
+    for test in wycheproof::ec_curve::TestName::all() {
+        let _kat = wycheproof::ec_curve::TestSet::load(test).unwrap();
+    }
+}
+
+#[test]
+fn test_fpe_str_parsing() {
+    for test in wycheproof::fpe_str::TestName::all() {
+        let _kat = wycheproof::fpe_str::TestSet::load(test).unwrap();
+    }
+}
+
+#[test]
+fn test_fpe_list_parsing() {
+    for test in wycheproof::fpe_list::TestName::all() {
+        let _kat = wycheproof::fpe_list::TestSet::load(test).unwrap();
     }
 }
 
@@ -93,13 +107,6 @@ fn test_rsa_oaep_parsing() {
 fn test_rsa_pkcs1_decrypt_parsing() {
     for test in wycheproof::rsa_pkcs1_decrypt::TestName::all() {
         let _kat = wycheproof::rsa_pkcs1_decrypt::TestSet::load(test).unwrap();
-    }
-}
-
-#[test]
-fn test_rsa_pkcs1_sign_parsing() {
-    for test in wycheproof::rsa_pkcs1_sign::TestName::all() {
-        let _kat = wycheproof::rsa_pkcs1_sign::TestSet::load(test).unwrap();
     }
 }
 

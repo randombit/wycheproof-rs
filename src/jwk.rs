@@ -56,11 +56,9 @@ pub struct RsaPrivateJwk {
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
-pub struct EddsaJwk {
+pub struct EddsaPublicJwk {
     #[serde(rename = "crv")]
     pub curve: EdwardsCurve,
-    #[serde(deserialize_with = "vec_from_base64")]
-    pub d: Vec<u8>,
     pub kid: String,
     pub kty: String,
     #[serde(deserialize_with = "vec_from_base64")]

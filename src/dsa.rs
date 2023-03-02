@@ -19,10 +19,24 @@ define_test_set_names!(
     Dsa2048_224Sha256P1363 => "dsa_2048_224_sha256_p1363",
     Dsa2048_256Sha256P1363 => "dsa_2048_256_sha256_p1363",
     Dsa3072_256Sha256P1363 => "dsa_3072_256_sha256_p1363",
-    DsaMisc => "dsa"
 );
 
-define_test_flags!(EdgeCase, NoLeadingZero);
+define_test_flags!(
+    ArithmeticError,
+    BerEncodedSignature,
+    IntegerOverflow,
+    InvalidEncoding,
+    InvalidSignature,
+    InvalidTypesInSignature,
+    MissingZero,
+    ModifiedInteger,
+    ModifiedSignature,
+    ModularInverse,
+    Normal,
+    RangeCheck,
+    SmallRandS,
+    SpecialCaseHash,
+);
 
 define_typeid!(TestKeyTypeId => "DsaPublicKey");
 
@@ -46,9 +60,9 @@ pub struct TestKey {
 define_typeid!(TestGroupTypeId => "DsaVerify", "DsaP1363Verify");
 
 define_test_group!(
-    key: TestKey,
-    "keyDer" => der: Vec<u8> | "vec_from_hex",
-    "keyPem" => pem: String,
+    "publicKey" => key: TestKey,
+    "publicKeyDer" => der: Vec<u8> | "vec_from_hex",
+    "publicKeyPem" => pem: String,
     "sha" => hash: HashFunction,
 );
 

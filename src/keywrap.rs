@@ -5,16 +5,34 @@ use super::*;
 define_test_set!("Keywrap", "keywrap_test_schema.json");
 
 define_test_set_names!(
-    KeyWrap => "kw",
-    KeyWrapWithPadding => "kwp",
+    AesKeyWrap => "aes_wrap",
+    AesKeyWrapWithPadding => "aes_kwp",
+    AriaKeyWrap => "aria_wrap",
+    AriaKeyWrapWithPadding => "aria_kwp",
+    CamelliaKeyWrap => "camellia_wrap",
+    SeedKeyWrap => "seed_wrap",
 );
 
 define_algorithm_map!(
-    "KW" => KeyWrap,
-    "KWP" => KeyWrapWithPadding,
+    "AES-KWP" => AesKeyWrapWithPadding,
+    "AES-WRAP" => AesKeyWrap,
+    "ARIA-KWP" => AriaKeyWrapWithPadding,
+    "ARIA-WRAP" => AriaKeyWrap,
+    "CAMELLIA-WRAP" => CamelliaKeyWrap,
+    "SEED-WRAP" => SeedKeyWrap,
 );
 
-define_test_flags!(SmallKey, WeakWrapping);
+define_test_flags!(
+    CounterOverflow,
+    EmptyKey,
+    InvalidWrappingSize,
+    ModifiedIv,
+    ModifiedPadding,
+    Normal,
+    ShortKey,
+    SmallKey,
+    WrongDataSize,
+);
 
 define_typeid!(TestGroupTypeId => "KeywrapTest");
 
