@@ -1,7 +1,9 @@
-## 0.5.0 Not Yet Released
+## 0.5.0 2023-03-04
 
 * Update the Wycheproof test data to the new set released on
   2023-02-27. This set removes the daead and pkcs1_sign tests.
+* Several small structure changes which reflect changes in the
+  Wycheproof data.
 * Various types within the tests that were Vec<u8> are now
   wrapped in LargeInteger or ByteString types
 * Add num-bigint feature for converting LargeInteger into
