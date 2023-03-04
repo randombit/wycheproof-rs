@@ -15,7 +15,7 @@ define_test_flags!(
     EdgeCaseMultiplication,
     EdgeCasePrivateKey,
     EdgeCaseShared,
-    Ktv,
+    "Ktv" => KnownTestVector,
     LowOrderPublic,
     NonCanonicalPublic,
     Normal,

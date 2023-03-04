@@ -22,7 +22,7 @@ define_test_group_type_id!(
 define_test_flags!(
     EdgeCase,
     InvalidNonce,
-    Ktv,
+    "Ktv" => KnownTestVector,
     ModifiedTag,
     Pseudorandom,
     SpecialCaseTag,

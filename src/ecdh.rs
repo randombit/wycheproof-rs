@@ -27,14 +27,10 @@ define_test_set_names!(
     EcdhSecp521r1Ecpoint => "ecdh_secp521r1_ecpoint",
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[allow(non_camel_case_types)]
-pub enum TestFlag {
+define_test_flags!(
     AdditionChain,
-    #[serde(rename = "CVE-2017-8932")]
-    CVE_2017_8932,
-    #[serde(rename = "CVE_2017_10176")]
-    CVE_2017_10176,
+    "CVE-2017-8932" => GolangScalarmulBug,
+    "CVE_2017_10176" => JavaAdditionChainBug,
     CompressedPoint,
     CompressedPublic,
     EdgeCaseDoubling,
@@ -49,8 +45,7 @@ pub enum TestFlag {
     IsomorphicPublicKey,
     GroupIsomorphism,
     LargeCofactor,
-    #[serde(rename = "Modified curve parameter")]
-    ModifiedCurveParameter,
+    "Modified curve parameter" => ModifiedCurveParameter,
     ModifiedCofactor,
     ModifiedGenerator,
     ModifiedGroup,
@@ -63,7 +58,7 @@ pub enum TestFlag {
     WeakPublicKey,
     WrongCurve,
     WrongOrder,
-}
+);
 
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EcdhEncoding {
