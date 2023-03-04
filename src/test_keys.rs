@@ -70,30 +70,30 @@ pub struct EddsaPublicJwk {
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivate {
     #[serde(rename = "publicExponent")]
-    e: LargeInteger,
+    pub e: LargeInteger,
     #[serde(rename = "privateExponent")]
-    d: LargeInteger,
+    pub d: LargeInteger,
     #[serde(rename = "modulus")]
-    n: LargeInteger,
+    pub n: LargeInteger,
     #[serde(rename = "prime1")]
-    p: LargeInteger,
+    pub p: LargeInteger,
     #[serde(rename = "prime2")]
-    q: LargeInteger,
+    pub q: LargeInteger,
     #[serde(rename = "exponent1")]
-    d1: LargeInteger,
+    pub d1: LargeInteger,
     #[serde(rename = "exponent2")]
-    d2: LargeInteger,
+    pub d2: LargeInteger,
     #[serde(rename = "coefficient")]
-    c: LargeInteger,
+    pub c: LargeInteger,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublic {
     #[serde(rename = "publicExponent")]
-    e: LargeInteger,
+    pub e: LargeInteger,
     #[serde(rename = "modulus")]
-    n: LargeInteger,
+    pub n: LargeInteger,
 }
 
 define_typeid!(EcPublicKeyTypeId => "EcPublicKey");
