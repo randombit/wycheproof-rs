@@ -114,24 +114,6 @@ define_test_flags!(
     ValidSignature,
 );
 
-define_typeid!(TestKeyTypeId => "EcPublicKey");
-
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestKey {
-    pub curve: EllipticCurve,
-    #[serde(rename = "keySize")]
-    pub key_size: usize,
-    #[serde(rename = "type")]
-    typ: TestKeyTypeId,
-    #[serde(rename = "uncompressed")]
-    pub key: ByteString,
-    #[serde(rename = "wx")]
-    pub affine_x: LargeInteger,
-    #[serde(rename = "wy")]
-    pub affine_y: LargeInteger,
-}
-
 define_test_group_type_id!(
     "EcdsaVerify" => Ecdsa,
     "EcdsaP1363Verify" => EcdsaP1363,
@@ -140,7 +122,7 @@ define_test_group_type_id!(
 
 define_test_group!(
     "publicKeyJwk" => jwk: Option<EcdsaPublicJwk>,
-    "publicKey" => key: TestKey,
+    "publicKey" => key: EcdsaPublic,
     "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
     "sha" => hash: HashFunction,

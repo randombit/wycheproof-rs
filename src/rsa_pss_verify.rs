@@ -60,15 +60,6 @@ define_test_group_type_id!(
     "RsassaPssWithParametersVerify" => RsaPssVerifyWithParam,
 );
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestKey {
-    #[serde(rename = "publicExponent")]
-    e: LargeInteger,
-    #[serde(rename = "modulus")]
-    n: LargeInteger,
-}
-
 fn deser_mgf_hash<'de, D: Deserializer<'de>>(
     deserializer: D,
 ) -> Result<Option<HashFunction>, D::Error> {
@@ -87,7 +78,7 @@ fn deser_mgf_hash<'de, D: Deserializer<'de>>(
 }
 
 define_test_group!(
-    "publicKey" => key: TestKey,
+    "publicKey" => key: RsaPublic,
     "publicKeyAsn" => asn_key: ByteString,
     "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
