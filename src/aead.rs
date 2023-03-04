@@ -91,7 +91,9 @@ pub enum TestFlag {
     ZeroLengthIv,
 }
 
-define_typeid!(TestGroupTypeId => "AeadTest");
+define_test_group_type_id!(
+    "AeadTest" => Aead,
+);
 
 define_test_group!(
     "ivSize" => nonce_size: usize,

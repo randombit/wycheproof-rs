@@ -31,7 +31,9 @@ define_test_flags!(
     SmallMessageSize,
 );
 
-define_typeid!(TestGroupTypeId => "FpeStrTest");
+define_test_group_type_id!(
+    "FpeStrTest" => FpeStrTest,
+);
 
 define_test_group!(
     alphabet: String,

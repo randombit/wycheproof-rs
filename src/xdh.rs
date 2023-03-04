@@ -26,7 +26,9 @@ define_test_flags!(
     ZeroSharedSecret,
 );
 
-define_typeid!(TestGroupTypeId => "XdhComp");
+define_test_group_type_id!(
+    "XdhComp" => KeyAgreement,
+);
 
 define_test_group!(curve: MontgomeryCurve);
 

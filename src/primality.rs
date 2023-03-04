@@ -32,7 +32,9 @@ define_test_flags!(
     Stephan20,
 );
 
-define_typeid!(TestGroupTypeId => "PrimalityTest");
+define_test_group_type_id!(
+    "PrimalityTest" => PrimalityTest,
+);
 
 define_test_group!();
 

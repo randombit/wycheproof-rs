@@ -40,7 +40,9 @@ pub struct TestKey {
     typ: TestKeyTypeId,
 }
 
-define_typeid!(TestGroupTypeId => "EddsaVerify");
+define_test_group_type_id!(
+    "EddsaVerify" => Eddsa,
+);
 
 define_test_group!(
     "publicKeyJwk" => jwk: EddsaPublicJwk,

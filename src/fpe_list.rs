@@ -35,7 +35,9 @@ define_test_flags!(
     SmallMessageSize,
 );
 
-define_typeid!(TestGroupTypeId => "FpeListTest");
+define_test_group_type_id!(
+    "FpeListTest" => FpeList,
+);
 
 define_test_group!(
     "keySize" => key_size: usize,

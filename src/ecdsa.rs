@@ -133,7 +133,11 @@ pub struct TestKey {
     pub affine_y: LargeInteger,
 }
 
-define_typeid!(TestGroupTypeId => "EcdsaVerify", "EcdsaP1363Verify", "EcdsaBitcoinVerify");
+define_test_group_type_id!(
+    "EcdsaVerify" => Ecdsa,
+    "EcdsaP1363Verify" => EcdsaP1363,
+    "EcdsaBitcoinVerify" => EcdsaBitcoin,
+);
 
 define_test_group!(
     "publicKeyJwk" => jwk: Option<EcdsaPublicJwk>,
