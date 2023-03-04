@@ -26,7 +26,9 @@ define_test_flags!(
     SizeTooLarge,
 );
 
-define_typeid!(TestGroupTypeId => "HkdfTest");
+define_test_group_type_id!(
+    "HkdfTest" => KDF,
+);
 
 define_test_group!(
     "keySize" => key_size: usize,

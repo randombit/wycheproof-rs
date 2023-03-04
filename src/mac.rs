@@ -54,7 +54,9 @@ define_algorithm_map!(
     "SipHashX-4-8" => Siphashx_4_8,
 );
 
-define_typeid!(TestGroupTypeId => "MacTest");
+define_test_group_type_id!(
+    "MacTest" => Mac,
+);
 
 define_test_flags!(InvalidKeySize, ModifiedTag, Pseudorandom, TruncatedHmac,);
 

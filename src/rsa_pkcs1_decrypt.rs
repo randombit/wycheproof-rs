@@ -26,7 +26,9 @@ pub enum TestFlag {
     Sslv23Padding,
 }
 
-define_typeid!(TestGroupTypeId => "RsaesPkcs1Decrypt");
+define_test_group_type_id!(
+    "RsaesPkcs1Decrypt" => RsaPkcs1Decrypt,
+);
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]

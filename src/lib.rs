@@ -120,6 +120,19 @@ macro_rules! define_typeid {
     }
 }
 
+macro_rules! define_test_group_type_id {
+    ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[allow(non_camel_case_types)]
+        pub enum TestGroupTypeId {
+            $(
+                #[serde(rename = $json_str)]
+                $enum_elem,
+            )*
+        }
+    }
+}
+
 macro_rules! define_algorithm_map {
     ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
@@ -231,7 +244,7 @@ macro_rules! define_test_group {
             pub $field_name: $type,
             )*
             #[serde(rename = "type")]
-            typ: TestGroupTypeId,
+            pub test_type: TestGroupTypeId,
             pub tests: Vec<Test>,
         }
     }
@@ -260,7 +273,7 @@ macro_rules! define_test_set {
     ( $schema_type:expr, $( $schema_name:expr ),* ) => {
 
         #[derive(Debug, Clone, Hash, Eq, PartialEq)]
-        pub struct TestSchema {
+        struct TestSchema {
             pub schema: String,
         }
 

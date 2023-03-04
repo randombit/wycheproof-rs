@@ -55,7 +55,10 @@ define_test_flags!(
     WrongPrimitive,
 );
 
-define_typeid!(TestGroupTypeId => "RsassaPssVerify", "RsassaPssWithParametersVerify");
+define_test_group_type_id!(
+    "RsassaPssVerify" => RsaPssVerify,
+    "RsassaPssWithParametersVerify" => RsaPssVerifyWithParam,
+);
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]

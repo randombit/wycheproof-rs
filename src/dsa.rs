@@ -53,7 +53,10 @@ pub struct TestKey {
     pub y: LargeInteger,
 }
 
-define_typeid!(TestGroupTypeId => "DsaVerify", "DsaP1363Verify");
+define_test_group_type_id!(
+    "DsaVerify" => DsaVerify,
+    "DsaP1363Verify" => DsaVerifyP1363,
+);
 
 define_test_group!(
     "publicKey" => key: TestKey,

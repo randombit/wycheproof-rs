@@ -73,7 +73,10 @@ pub enum EcdhEncoding {
     EcPoint,
 }
 
-define_typeid!(TestGroupTypeId => "EcdhTest", "EcdhEcpointTest");
+define_test_group_type_id!(
+    "EcdhTest" => Ecdh,
+    "EcdhEcpointTest" => EcdhEcpoint,
+);
 
 define_test_group!(curve: EllipticCurve, encoding: EcdhEncoding);
 

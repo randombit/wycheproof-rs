@@ -10,7 +10,9 @@ define_test_set_names!(
 
 define_test_flags!();
 
-define_typeid!(TestGroupTypeId => "EcCurveTest");
+define_test_group_type_id!(
+    "EcCurveTest" => EcCurve,
+);
 
 define_algorithm_map!(
     "EcCurveTest" => EcCurve

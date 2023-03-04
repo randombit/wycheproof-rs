@@ -47,7 +47,9 @@ define_test_flags!(
     SmallModulus,
 );
 
-define_typeid!(TestGroupTypeId => "RsaesOaepDecrypt");
+define_test_group_type_id!(
+    "RsaesOaepDecrypt" => RsaOaepDecrypt,
+);
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]

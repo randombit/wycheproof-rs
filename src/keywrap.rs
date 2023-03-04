@@ -34,7 +34,9 @@ define_test_flags!(
     WrongDataSize,
 );
 
-define_typeid!(TestGroupTypeId => "KeywrapTest");
+define_test_group_type_id!(
+    "KeywrapTest" => Keywrap
+);
 
 define_test_group!(
     "keySize" => key_size: usize,

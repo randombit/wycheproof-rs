@@ -15,7 +15,9 @@ define_algorithm_map!(
     "VMAC-AES" => VmacAes,
 );
 
-define_typeid!(TestGroupTypeId => "MacWithIvTest");
+define_test_group_type_id!(
+    "MacWithIvTest" => MacWithIv,
+);
 
 define_test_flags!(
     EdgeCase,

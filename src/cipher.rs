@@ -20,7 +20,9 @@ define_algorithm_map!(
 
 define_test_flags!(BadPadding, NoPadding, Pseudorandom);
 
-define_typeid!(TestGroupTypeId => "IndCpaTest");
+define_test_group_type_id!(
+    "IndCpaTest" => Cipher,
+);
 
 define_test_group!(
     "ivSize" => nonce_size: usize,
