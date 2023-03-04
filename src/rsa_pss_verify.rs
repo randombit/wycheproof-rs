@@ -66,6 +66,23 @@ pub struct TestKey {
     n: LargeInteger,
 }
 
+fn deser_mgf_hash<'de, D: Deserializer<'de>>(
+    deserializer: D,
+) -> Result<Option<HashFunction>, D::Error> {
+    let s: &str = Deserialize::deserialize(deserializer)?;
+    match s {
+        "" => Ok(None),
+        "SHA-1" => Ok(Some(HashFunction::Sha1)),
+        "SHA-224" => Ok(Some(HashFunction::Sha2_224)),
+        "SHA-256" => Ok(Some(HashFunction::Sha2_256)),
+        "SHA-384" => Ok(Some(HashFunction::Sha2_384)),
+        "SHA-512" => Ok(Some(HashFunction::Sha2_512)),
+        "SHA-512/224" => Ok(Some(HashFunction::Sha2_512_224)),
+        "SHA-512/256" => Ok(Some(HashFunction::Sha2_512_256)),
+        h => panic!("Unknown hash {}", h),
+    }
+}
+
 define_test_group!(
     "publicKey" => key: TestKey,
     "publicKeyAsn" => asn_key: ByteString,
@@ -74,8 +91,8 @@ define_test_group!(
     "publicKeyJwk" => jwk: Option<RsaPublicJwk>,
     "keySize" => key_size: usize,
     mgf: Mgf,
-    "mgfSha" => mgf_hash: HashFunction,
-    "sLen" => salt_length: usize,
+    "mgfSha" => mgf_hash: Option<HashFunction> | "deser_mgf_hash",
+    "sLen" => salt_size: usize,
     "sha" => hash: HashFunction,
 );
 

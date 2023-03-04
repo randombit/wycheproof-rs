@@ -401,9 +401,6 @@ pub enum EllipticCurve {
 /// Hash Function identifiers
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum HashFunction {
-    #[serde(rename = "")]
-    None,
-
     #[serde(rename = "SHA-1")]
     Sha1,
 
