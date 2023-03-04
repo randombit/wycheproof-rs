@@ -546,8 +546,8 @@ impl LargeInteger {
     }
 }
 
-mod jwk;
-pub use jwk::*;
+mod test_keys;
+pub use test_keys::*;
 
 pub mod aead;
 pub mod cipher;

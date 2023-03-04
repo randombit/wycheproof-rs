@@ -65,3 +65,79 @@ pub struct EddsaPublicJwk {
     #[serde(deserialize_with = "int_from_base64")]
     pub x: LargeInteger,
 }
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RsaPrivate {
+    #[serde(rename = "publicExponent")]
+    e: LargeInteger,
+    #[serde(rename = "privateExponent")]
+    d: LargeInteger,
+    #[serde(rename = "modulus")]
+    n: LargeInteger,
+    #[serde(rename = "prime1")]
+    p: LargeInteger,
+    #[serde(rename = "prime2")]
+    q: LargeInteger,
+    #[serde(rename = "exponent1")]
+    d1: LargeInteger,
+    #[serde(rename = "exponent2")]
+    d2: LargeInteger,
+    #[serde(rename = "coefficient")]
+    c: LargeInteger,
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RsaPublic {
+    #[serde(rename = "publicExponent")]
+    e: LargeInteger,
+    #[serde(rename = "modulus")]
+    n: LargeInteger,
+}
+
+define_typeid!(EcPublicKeyTypeId => "EcPublicKey");
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EcdsaPublic {
+    pub curve: EllipticCurve,
+    #[serde(rename = "keySize")]
+    pub key_size: usize,
+    #[serde(rename = "type")]
+    typ: EcPublicKeyTypeId,
+    #[serde(rename = "uncompressed")]
+    pub key: ByteString,
+    #[serde(rename = "wx")]
+    pub affine_x: LargeInteger,
+    #[serde(rename = "wy")]
+    pub affine_y: LargeInteger,
+}
+
+define_typeid!(DsaPublicKeyTypeId => "DsaPublicKey");
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DsaPublic {
+    pub g: LargeInteger,
+    #[serde(rename = "keySize")]
+    pub key_size: usize,
+    pub p: LargeInteger,
+    pub q: LargeInteger,
+    #[serde(rename = "type")]
+    typ: DsaPublicKeyTypeId,
+    pub y: LargeInteger,
+}
+
+define_typeid!(EddsaPublicKeyTypeId => "EDDSAPublicKey");
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EddsaPublic {
+    pub curve: EdwardsCurve,
+    #[serde(rename = "keySize")]
+    pub key_size: usize,
+    pub pk: ByteString,
+    #[serde(rename = "type")]
+    typ: EddsaPublicKeyTypeId,
+}

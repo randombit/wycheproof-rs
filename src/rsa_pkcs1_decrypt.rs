@@ -30,29 +30,8 @@ define_test_group_type_id!(
     "RsaesPkcs1Decrypt" => RsaPkcs1Decrypt,
 );
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestKey {
-    #[serde(rename = "publicExponent")]
-    e: LargeInteger,
-    #[serde(rename = "privateExponent")]
-    d: LargeInteger,
-    #[serde(rename = "modulus")]
-    n: LargeInteger,
-    #[serde(rename = "prime1")]
-    p: LargeInteger,
-    #[serde(rename = "prime2")]
-    q: LargeInteger,
-    #[serde(rename = "exponent1")]
-    d1: LargeInteger,
-    #[serde(rename = "exponent2")]
-    d2: LargeInteger,
-    #[serde(rename = "coefficient")]
-    c: LargeInteger,
-}
-
 define_test_group!(
-    "privateKey" => key: TestKey,
+    "privateKey" => key: RsaPrivate,
     "keySize" => key_size: usize,
     "privateKeyJwk" => jwk: Option<RsaPrivateJwk>,
     "privateKeyPkcs8" => pkcs8: ByteString,

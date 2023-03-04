@@ -38,28 +38,13 @@ define_test_flags!(
     SpecialCaseHash,
 );
 
-define_typeid!(TestKeyTypeId => "DsaPublicKey");
-
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestKey {
-    pub g: LargeInteger,
-    #[serde(rename = "keySize")]
-    pub key_size: usize,
-    pub p: LargeInteger,
-    pub q: LargeInteger,
-    #[serde(rename = "type")]
-    typ: TestKeyTypeId,
-    pub y: LargeInteger,
-}
-
 define_test_group_type_id!(
     "DsaVerify" => DsaVerify,
     "DsaP1363Verify" => DsaVerifyP1363,
 );
 
 define_test_group!(
-    "publicKey" => key: TestKey,
+    "publicKey" => key: DsaPublic,
     "publicKeyDer" => der: ByteString,
     "publicKeyPem" => pem: String,
     "sha" => hash: HashFunction,

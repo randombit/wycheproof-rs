@@ -54,17 +54,8 @@ define_test_group_type_id!(
     "RsassaPkcs1Verify" => RsaPkcs1Verify,
 );
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct TestKey {
-    #[serde(rename = "publicExponent")]
-    e: LargeInteger,
-    #[serde(rename = "modulus")]
-    n: LargeInteger,
-}
-
 define_test_group!(
-    "publicKey" => key: TestKey,
+    "publicKey" => key: RsaPublic,
     "publicKeyAsn" => asn_key: ByteString,
     "publicKeyDer" => der: ByteString,
     "keyJwk" => jwk: Option<RsaPublicJwk>,
