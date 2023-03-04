@@ -12,19 +12,16 @@ define_test_set_names!(
     Rsa4096 => "rsa_pkcs1_4096"
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    #[serde(rename = "CVE 2020-14967")]
-    Cve2020_14967,
-    #[serde(rename = "CVE 2021-3580")]
-    Cve2020_3580,
+define_test_flags!(
+    "CVE 2020-14967" => LeadingZerosOnCiphertext,
+    "CVE 2021-3580" => CiphertextTooLarge,
     InvalidCiphertextFormat,
     InvalidPkcs1Padding,
     Normal,
     SpecialCase,
     SpecialCasePadding,
     Sslv23Padding,
-}
+);
 
 define_test_group_type_id!(
     "RsaesPkcs1Decrypt" => RsaPkcs1Decrypt,

@@ -11,21 +11,18 @@ define_test_set_names!(
 
 define_algorithm_map!("EDDSA" => EdDsa);
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
+define_test_flags!(
     CompressedSignature,
     InvalidEncoding,
     InvalidSignature,
-    #[serde(rename = "Ktv")]
-    KnownTestVector,
-    #[serde(rename = "InvalidKtv")]
-    InvalidKnownTestVector,
+    "Ktv" => KnownTestVector,
+    "InvalidKtv" => InvalidKnownTestVector,
     SignatureMalleability,
     SignatureWithGarbage,
     TinkOverflow,
     TruncatedSignature,
     Valid,
-}
+);
 
 define_typeid!(TestKeyTypeId => "EDDSAPublicKey");
 

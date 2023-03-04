@@ -61,16 +61,11 @@ define_algorithm_map!(
     "XCHACHA20-POLY1305" => XChaCha20Poly1305,
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
-    #[serde(rename = "Ktv")]
-    KnownTestVector,
-    #[serde(rename = "TagCollision_1")]
-    TagCollisionPtext,
-    #[serde(rename = "TagCollision_2")]
-    TagCollisionAad,
-    #[serde(rename = "CVE-2017-18330")]
-    LongNonce,
+define_test_flags!(
+    "CVE-2017-18330" => LongNonce,
+    "Ktv" => KnownTestVector,
+    "TagCollision_1" => TagCollisionPtext,
+    "TagCollision_2" => TagCollisionAad,
     CounterWrap,
     EdgeCaseCiphertext,
     EdgeCasePoly1305,
@@ -89,7 +84,7 @@ pub enum TestFlag {
     SpecialCaseIv,
     WrappedIv,
     ZeroLengthIv,
-}
+);
 
 define_test_group_type_id!(
     "AeadTest" => Aead,

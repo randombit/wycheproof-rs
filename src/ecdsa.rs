@@ -90,8 +90,7 @@ define_test_set_names!(
     EcdsaSecp521r1Webcrypto => "ecdsa_secp521r1_webcrypto",
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
-pub enum TestFlag {
+define_test_flags!(
     ArithmeticError,
     BerEncodedSignature,
     EdgeCasePublicKey,
@@ -113,7 +112,7 @@ pub enum TestFlag {
     SpecialCaseHash,
     Untruncatedhash,
     ValidSignature,
-}
+);
 
 define_typeid!(TestKeyTypeId => "EcPublicKey");
 

@@ -229,10 +229,11 @@ pub struct TestFlagInfo {
 }
 
 macro_rules! define_test_flags {
-    ( $( $flag:ident ),* $(,)?) => {
+    ( $( $($json_name:literal =>)? $flag:ident ),* $(,)?) => {
         #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
         pub enum TestFlag {
             $(
+                $(#[serde(rename = $json_name)])?
                 $flag,
             )*
         }
