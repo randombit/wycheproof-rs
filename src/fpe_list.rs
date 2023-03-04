@@ -48,6 +48,6 @@ define_test_group!(
 define_test!(
     key: ByteString,
     tweak: ByteString,
-    msg: Vec<isize>,
+    "msg" => pt: Vec<isize>,
     ct: Vec<usize>,
 );

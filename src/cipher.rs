@@ -30,7 +30,7 @@ define_test_group!(
 );
 
 define_test!(
-    iv: ByteString,
+    "iv" => nonce: ByteString,
     key: ByteString,
     "msg" => pt: ByteString,
     ct: ByteString,

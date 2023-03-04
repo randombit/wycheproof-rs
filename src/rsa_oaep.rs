@@ -62,4 +62,4 @@ define_test_group!(
     "sha" => hash: HashFunction,
 );
 
-define_test!(msg: ByteString, ct: ByteString, label: ByteString);
+define_test!("msg" => pt: ByteString, ct: ByteString, label: ByteString);

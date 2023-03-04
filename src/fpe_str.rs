@@ -42,4 +42,9 @@ define_test_group!(
     radix: usize,
 );
 
-define_test!(key: ByteString, tweak: ByteString, msg: String, ct: String,);
+define_test!(
+    key: ByteString,
+    tweak: ByteString,
+    "msg" => pt: String,
+    ct: String
+);

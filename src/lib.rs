@@ -562,7 +562,7 @@ pub mod fpe_str;
 pub mod hkdf;
 pub mod keywrap;
 pub mod mac;
-pub mod mac_with_iv;
+pub mod mac_with_nonce;
 pub mod primality;
 pub mod rsa_oaep;
 pub mod rsa_pkcs1_decrypt;
