@@ -199,14 +199,20 @@ pub enum BugType {
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+pub struct CVE(pub String);
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+pub struct URL(pub String);
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestFlagInfo {
     #[serde(rename = "bugType")]
     pub bug_type: BugType,
     pub description: Option<String>,
     pub effect: Option<String>,
-    pub cves: Option<Vec<String>>,
-    pub links: Option<Vec<String>>,
+    pub cves: Option<Vec<CVE>>,
+    pub links: Option<Vec<URL>>,
 }
 
 macro_rules! define_test_flags {
