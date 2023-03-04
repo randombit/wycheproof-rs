@@ -42,4 +42,8 @@ define_test_group!(
     "keySize" => key_size: usize,
 );
 
-define_test!(key: ByteString, msg: ByteString, ct: ByteString);
+define_test!(
+    key: ByteString,
+    "msg" => pt: ByteString,
+    ct: ByteString
+);

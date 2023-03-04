@@ -83,9 +83,9 @@ fn test_mac_parsing() {
 }
 
 #[test]
-fn test_mac_with_iv_parsing() {
-    for test in wycheproof::mac_with_iv::TestName::all() {
-        let _kat = wycheproof::mac_with_iv::TestSet::load(test).unwrap();
+fn test_mac_with_nonce_parsing() {
+    for test in wycheproof::mac_with_nonce::TestName::all() {
+        let _kat = wycheproof::mac_with_nonce::TestSet::load(test).unwrap();
     }
 }
 

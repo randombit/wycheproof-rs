@@ -35,4 +35,4 @@ define_test_group!(
     "privateKeyPem" => pem: String,
 );
 
-define_test!(msg: ByteString, ct: ByteString);
+define_test!("msg" => pt: ByteString, ct: ByteString);
