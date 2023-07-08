@@ -1,3 +1,7 @@
+## 0.5.1 Not Yet Released
+
+* Update base64 dependency from 0.13 to 0.21
+
 ## 0.5.0 2023-03-04
 
 * Update the Wycheproof test data to the new set released on
