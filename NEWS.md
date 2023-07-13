@@ -1,4 +1,4 @@
-## 0.5.1 Not Yet Released
+## 0.5.1 2023-07-13
 
 * Update base64 dependency from 0.13 to 0.21
 
