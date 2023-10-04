@@ -1,10 +1,9 @@
 use super::*;
-use base64::Engine;
 
 fn int_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<LargeInteger, D::Error> {
     let s: &str = Deserialize::deserialize(deserializer)?;
-    let bytes = base64::engine::general_purpose::URL_SAFE_NO_PAD
-        .decode(s)
+    let bytes = data_encoding::BASE64URL_NOPAD
+        .decode(s.as_bytes())
         .map_err(D::Error::custom)?;
     Ok(LargeInteger::new(bytes))
 }

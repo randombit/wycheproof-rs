@@ -42,11 +42,11 @@
 //!             println!(
 //!                 "Test:{} Key:{} AAD:{} PT:{} CT:{} Tag:{}",
 //!                 test.tc_id,
-//!                 hex::encode(test.key),
-//!                 hex::encode(test.aad),
-//!                 hex::encode(test.pt),
-//!                 hex::encode(test.ct),
-//!                 hex::encode(test.tag)
+//!                 data_encoding::HEXLOWER.encode(&test.key),
+//!                 data_encoding::HEXLOWER.encode(&test.aad),
+//!                 data_encoding::HEXLOWER.encode(&test.pt),
+//!                 data_encoding::HEXLOWER.encode(&test.ct),
+//!                 data_encoding::HEXLOWER.encode(&test.tag)
 //!             );
 //!         }
 //!     }
@@ -91,7 +91,9 @@ impl std::error::Error for WycheproofError {}
 
 fn vec_from_hex<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D::Error> {
     let s: &str = Deserialize::deserialize(deserializer)?;
-    hex::decode(s).map_err(D::Error::custom)
+    data_encoding::HEXLOWER
+        .decode(s.as_bytes())
+        .map_err(D::Error::custom)
 }
 
 fn combine_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
@@ -497,7 +499,7 @@ impl ByteString {
 
 impl fmt::Debug for ByteString {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "\"{}\"", hex::encode(&self.value))
+        write!(f, "\"{}\"", data_encoding::HEXLOWER.encode(&self.value))
     }
 }
 
