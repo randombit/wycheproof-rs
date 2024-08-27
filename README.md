@@ -25,3 +25,23 @@ Comments and patches are welcome.
 This crate is licensed Apache 2.0-only, just as Wycheproof itself is.  The files
 in `src/data` are taken from
 [the latest Wycheproof commit](https://github.com/google/wycheproof/commit/b063b4aedae951c69df014cd25fa6d69ae9e8cb9)
+
+By default all available tests are compiled in. If you only need to test a few
+specific algorithms, you can do so with `no-default-features` plus one or more
+feature flags
+
+* `aead`
+* `cipher`
+* `dsa`
+* `ec`
+* `ecdh`
+* `ecdsa`
+* `eddsa`
+* `fpe`
+* `hkdf`
+* `keywrap`
+* `mac`
+* `primality`
+* `rsa_enc`
+* `rsa_sig`
+* `xdh`

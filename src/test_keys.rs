@@ -8,6 +8,7 @@ fn int_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<LargeIn
     Ok(LargeInteger::new(bytes))
 }
 
+#[cfg(feature = "ecdsa")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EcdsaPublicJwk {
@@ -21,6 +22,7 @@ pub struct EcdsaPublicJwk {
     pub affine_y: LargeInteger,
 }
 
+#[cfg(feature = "rsa_sig")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublicJwk {
@@ -33,6 +35,7 @@ pub struct RsaPublicJwk {
     pub n: LargeInteger,
 }
 
+#[cfg(feature = "rsa_enc")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivateJwk {
@@ -57,6 +60,7 @@ pub struct RsaPrivateJwk {
     pub qi: LargeInteger,
 }
 
+#[cfg(feature = "eddsa")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EddsaPublicJwk {
@@ -68,6 +72,7 @@ pub struct EddsaPublicJwk {
     pub x: LargeInteger,
 }
 
+#[cfg(feature = "rsa_enc")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivate {
@@ -89,6 +94,7 @@ pub struct RsaPrivate {
     pub c: LargeInteger,
 }
 
+#[cfg(feature = "rsa_sig")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublic {
@@ -100,6 +106,7 @@ pub struct RsaPublic {
 
 define_typeid!(EcPublicKeyTypeId => "EcPublicKey");
 
+#[cfg(feature = "ecdsa")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EcdsaPublic {
@@ -118,6 +125,7 @@ pub struct EcdsaPublic {
 
 define_typeid!(DsaPublicKeyTypeId => "DsaPublicKey");
 
+#[cfg(feature = "dsa")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DsaPublic {
@@ -133,6 +141,7 @@ pub struct DsaPublic {
 
 define_typeid!(EddsaPublicKeyTypeId => "EDDSAPublicKey");
 
+#[cfg(feature = "eddsa")]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EddsaPublic {
