@@ -8,7 +8,7 @@ on:
 
 jobs:
   rustfmt:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: dtolnay/rust-toolchain@master
@@ -16,11 +16,11 @@ jobs:
           toolchain: nightly
           components: rustfmt
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: cargo fmt -- --check
   clippy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: dtolnay/rust-toolchain@master
@@ -28,11 +28,11 @@ jobs:
           toolchain: nightly
           components: clippy
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: cargo +nightly clippy -- --deny warnings
   ci:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
@@ -42,11 +42,15 @@ jobs:
           - toolchain: stable
           - toolchain: beta
           - toolchain: nightly
-          - toolchain: 1.57.0 # MSRV
+          - toolchain: 1.57.0   # MSRV
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
       - run: cargo test
+      - run: cargo test --no-default-features
+      - run: cargo test --no-default-features --features=aead
+      - run: cargo test --no-default-features --features=ecdsa
+      - run: cargo test --no-default-features --features=rsa_sig

@@ -1,5 +1,6 @@
 use super::*;
 
+#[allow(dead_code)]
 fn int_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<LargeInteger, D::Error> {
     let s: &str = Deserialize::deserialize(deserializer)?;
     let bytes = data_encoding::BASE64URL_NOPAD
