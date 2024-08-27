@@ -159,10 +159,11 @@ macro_rules! define_test_set_names {
         }
 
         impl TestName {
+            #[inline(never)]
             pub fn json_data(&self) -> &'static str {
                 match self {
                     $(
-                        Self::$enum_name => std::str::from_utf8(include_bytes!(concat!("data/", $test_name, "_test.json"))).expect("Invalid UTF8"),
+                        Self::$enum_name => include_str!(concat!("data/", $test_name, "_test.json")),
                     )*
                 }
             }
