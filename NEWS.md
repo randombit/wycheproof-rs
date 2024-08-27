@@ -1,3 +1,9 @@
+## 0.6.0 2024-08-27
+
+* Avoid inlining of the test data, which more completely resolves the
+  binary size blowup fixed in 0.5.2.
+* Add features which can be used to control which tests are included
+
 ## 0.5.2 2024-08-27
 
 * Change to using include_bytes instead of include_str, which for some
