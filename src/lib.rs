@@ -65,7 +65,6 @@
 #![forbid(unsafe_code)]
 
 use serde::{de::Error, Deserialize, Deserializer};
-use std::collections::HashMap;
 use std::fmt;
 
 /// The error type
@@ -315,7 +314,7 @@ macro_rules! define_test_set {
             pub number_of_tests: usize,
             #[serde(deserialize_with = "combine_header")]
             pub header: String,
-            pub notes: HashMap<TestFlag, TestFlagInfo>,
+            pub notes: std::collections::HashMap<TestFlag, TestFlagInfo>,
             schema: TestSchema,
             #[serde(rename = "testGroups")]
             pub test_groups: Vec<TestGroup>,
@@ -555,6 +554,7 @@ impl LargeInteger {
 }
 
 mod test_keys;
+#[allow(unused_imports)]
 pub use test_keys::*;
 
 #[cfg(feature = "aead")]
