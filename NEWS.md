@@ -1,3 +1,9 @@
+## 0.5.2 2024-08-27
+
+* Change to using include_bytes instead of include_str, which for some
+  unknown reason leads to dramatically smaller binaries.
+* Switch to using data-encoding instead of base64/hex crates
+
 ## 0.5.1 2023-07-13
 
 * Update base64 dependency from 0.13 to 0.21
