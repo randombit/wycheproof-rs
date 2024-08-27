@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  # https://github.com/rust-lang/cargo/issues/11014
+  CARGO_NET_GIT_FETCH_WITH_CLI: true
+
 jobs:
   rustfmt:
     runs-on: ubuntu-24.04
