@@ -1,3 +1,4 @@
+#[cfg(feature = "aead")]
 #[test]
 fn test_aead_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::aead::TestName::all() {
@@ -6,6 +7,7 @@ fn test_aead_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "cipher")]
 #[test]
 fn test_cipher_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::cipher::TestName::all() {
@@ -14,6 +16,7 @@ fn test_cipher_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "dsa")]
 #[test]
 fn test_dsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::dsa::TestName::all() {
@@ -22,6 +25,7 @@ fn test_dsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "ecdh")]
 #[test]
 fn test_ecdh_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::ecdh::TestName::all() {
@@ -30,6 +34,7 @@ fn test_ecdh_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "ecdsa")]
 #[test]
 fn test_ecdsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::ecdsa::TestName::all() {
@@ -38,6 +43,7 @@ fn test_ecdsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "eddsa")]
 #[test]
 fn test_eddsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::eddsa::TestName::all() {
@@ -46,6 +52,7 @@ fn test_eddsa_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "ec")]
 #[test]
 fn test_ec_curve_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::ec_curve::TestName::all() {
@@ -54,6 +61,7 @@ fn test_ec_curve_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "fpe")]
 #[test]
 fn test_fpe_str_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::fpe_str::TestName::all() {
@@ -62,6 +70,7 @@ fn test_fpe_str_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "fpe")]
 #[test]
 fn test_fpe_list_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::fpe_list::TestName::all() {
@@ -70,6 +79,7 @@ fn test_fpe_list_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "hkdf")]
 #[test]
 fn test_hkdf_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::hkdf::TestName::all() {
@@ -78,6 +88,7 @@ fn test_hkdf_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "keywrap")]
 #[test]
 fn test_keywrap_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::keywrap::TestName::all() {
@@ -86,6 +97,7 @@ fn test_keywrap_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "mac")]
 #[test]
 fn test_mac_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::mac::TestName::all() {
@@ -94,6 +106,7 @@ fn test_mac_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "mac")]
 #[test]
 fn test_mac_with_nonce_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::mac_with_nonce::TestName::all() {
@@ -102,6 +115,7 @@ fn test_mac_with_nonce_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "primality")]
 #[test]
 fn test_primality_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::primality::TestName::all() {
@@ -110,6 +124,7 @@ fn test_primality_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "rsa_enc")]
 #[test]
 fn test_rsa_oaep_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::rsa_oaep::TestName::all() {
@@ -118,6 +133,7 @@ fn test_rsa_oaep_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "rsa_enc")]
 #[test]
 fn test_rsa_pkcs1_decrypt_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::rsa_pkcs1_decrypt::TestName::all() {
@@ -126,6 +142,7 @@ fn test_rsa_pkcs1_decrypt_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "rsa_sig")]
 #[test]
 fn test_rsa_pkcs1_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::rsa_pkcs1_verify::TestName::all() {
@@ -134,6 +151,7 @@ fn test_rsa_pkcs1_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "rsa_sig")]
 #[test]
 fn test_rsa_pss_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::rsa_pss_verify::TestName::all() {
@@ -142,6 +160,7 @@ fn test_rsa_pss_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "xdh")]
 #[test]
 fn test_xdh_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::xdh::TestName::all() {

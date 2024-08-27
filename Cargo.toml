@@ -10,6 +10,26 @@ documentation = "https://docs.rs/wycheproof"
 categories = [ "cryptography" ]
 rust-version = "1.57"
 
+[features]
+# By default all tests are included
+default = ["aead", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "primality", "rsa_enc", "rsa_sig", "xdh"]
+
+aead = []
+cipher = []
+dsa = []
+ec = []
+ecdh = []
+ecdsa = []
+eddsa = []
+fpe = []
+hkdf = []
+keywrap = []
+mac = []
+primality = []
+rsa_enc = []
+rsa_sig = []
+xdh = []
+
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

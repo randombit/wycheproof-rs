@@ -29,6 +29,7 @@
 //! # Examples
 //!
 //! ```
+//! #[cfg(feature = "aead")]
 //! fn print_gcm() {
 //!     // Print all AES-GCM test vector data
 //!     let test_set = wycheproof::aead::TestSet::load(wycheproof::aead::TestName::AesGcm).unwrap();
@@ -55,6 +56,7 @@
 //!
 //! ```
 //! // Iterate over all of the AEAD tests
+//! #[cfg(feature = "aead")]
 //! for aead in wycheproof::aead::TestName::all() {
 //!    println!("{:?}", aead);
 //! }
@@ -464,6 +466,7 @@ pub enum Mgf {
 }
 
 /// Edwards curves
+#[cfg(feature = "eddsa")]
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum EdwardsCurve {
     #[serde(alias = "edwards25519")]
@@ -473,6 +476,7 @@ pub enum EdwardsCurve {
 }
 
 /// Montgomery curves
+#[cfg(feature = "xdh")]
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
 pub enum MontgomeryCurve {
     #[serde(alias = "curve25519")]
@@ -553,22 +557,59 @@ impl LargeInteger {
 mod test_keys;
 pub use test_keys::*;
 
+#[cfg(feature = "aead")]
 pub mod aead;
+
+#[cfg(feature = "cipher")]
 pub mod cipher;
+
+#[cfg(feature = "dsa")]
 pub mod dsa;
+
+#[cfg(feature = "ec")]
 pub mod ec_curve;
+
+#[cfg(feature = "ecdh")]
 pub mod ecdh;
+
+#[cfg(feature = "ecdsa")]
 pub mod ecdsa;
+
+#[cfg(feature = "eddsa")]
 pub mod eddsa;
+
+#[cfg(feature = "fpe")]
 pub mod fpe_list;
+
+#[cfg(feature = "fpe")]
 pub mod fpe_str;
+
+#[cfg(feature = "hkdf")]
 pub mod hkdf;
+
+#[cfg(feature = "keywrap")]
 pub mod keywrap;
+
+#[cfg(feature = "mac")]
 pub mod mac;
+
+#[cfg(feature = "mac")]
 pub mod mac_with_nonce;
+
+#[cfg(feature = "primality")]
 pub mod primality;
+
+#[cfg(feature = "rsa_enc")]
 pub mod rsa_oaep;
+
+#[cfg(feature = "rsa_enc")]
 pub mod rsa_pkcs1_decrypt;
+
+#[cfg(feature = "rsa_sig")]
 pub mod rsa_pkcs1_verify;
+
+#[cfg(feature = "rsa_sig")]
 pub mod rsa_pss_verify;
+
+#[cfg(feature = "xdh")]
 pub mod xdh;
