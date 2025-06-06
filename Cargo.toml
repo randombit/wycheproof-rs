@@ -31,7 +31,8 @@ rsa_sig = []
 xdh = []
 
 [dependencies]
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1" }
+serde_derive = { version = "1" }
 serde_json = "1"
 data-encoding = "2"
 

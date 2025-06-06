@@ -125,7 +125,7 @@ macro_rules! define_typeid {
 
 macro_rules! define_test_group_type_id {
     ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
-        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         #[allow(non_camel_case_types)]
         pub enum TestGroupTypeId {
             $(
@@ -138,7 +138,7 @@ macro_rules! define_test_group_type_id {
 
 macro_rules! define_algorithm_map {
     ( $( $json_str:expr => $enum_elem:ident ),* $(,)?) => {
-        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         #[allow(non_camel_case_types)]
         pub enum Algorithm {
             $(
@@ -151,7 +151,7 @@ macro_rules! define_algorithm_map {
 
 macro_rules! define_test_set_names {
     ( $( $enum_name:ident => $test_name:expr ),* $(,)?) => {
-        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         #[allow(non_camel_case_types)]
         pub enum TestName {
             $(
@@ -193,7 +193,7 @@ macro_rules! define_test_set_names {
     }
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum BugType {
     AuthBypass,
@@ -215,13 +215,13 @@ pub enum BugType {
     WrongPrimitive,
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub struct CVE(pub String);
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub struct URL(pub String);
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TestFlagInfo {
     #[serde(rename = "bugType")]
@@ -234,7 +234,7 @@ pub struct TestFlagInfo {
 
 macro_rules! define_test_flags {
     ( $( $($json_name:literal =>)? $flag:ident ),* $(,)?) => {
-        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         pub enum TestFlag {
             $(
                 $(#[serde(rename = $json_name)])?
@@ -246,7 +246,7 @@ macro_rules! define_test_flags {
 
 macro_rules! define_test_group {
     ( $( $($json_name:literal =>)? $field_name:ident: $type:ty $(| $deser_fn:expr)? ),* $(,)?) => {
-        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestGroup {
             $(
@@ -263,7 +263,7 @@ macro_rules! define_test_group {
 
 macro_rules! define_test {
     ( $( $($json_name:literal =>)? $field_name:ident: $type:ty ),* $(,)?) => {
-        #[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct Test {
             #[serde(rename = "tcId")]
@@ -304,7 +304,7 @@ macro_rules! define_test_set {
         #[doc = "A group of "]
         #[doc = $schema_type]
         #[doc = " tests."]
-        #[derive(Debug, Clone, Eq, PartialEq, Deserialize)]
+        #[derive(Debug, Clone, Eq, PartialEq, serde_derive::Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestSet {
             pub algorithm: Algorithm,
@@ -341,7 +341,7 @@ macro_rules! define_test_set {
 }
 
 /// The expected result of a Wycheproof test
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum TestResult {
     /// The test is expected to pass
     #[serde(rename = "valid")]
@@ -367,7 +367,7 @@ impl TestResult {
 }
 
 /// Prime order elliptic curves
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum EllipticCurve {
     #[serde(rename = "secp160r1")]
     Secp160r1,
@@ -417,7 +417,7 @@ pub enum EllipticCurve {
 }
 
 /// Hash Function identifiers
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum HashFunction {
     #[serde(rename = "SHA-1")]
     Sha1,
@@ -454,7 +454,7 @@ pub enum HashFunction {
 }
 
 /// MGF identifiers
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum Mgf {
     #[serde(rename = "MGF1")]
     Mgf1,
@@ -466,7 +466,7 @@ pub enum Mgf {
 
 /// Edwards curves
 #[cfg(feature = "eddsa")]
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum EdwardsCurve {
     #[serde(alias = "edwards25519")]
     Ed25519,
@@ -476,7 +476,7 @@ pub enum EdwardsCurve {
 
 /// Montgomery curves
 #[cfg(feature = "xdh")]
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum MontgomeryCurve {
     #[serde(alias = "curve25519")]
     X25519,
@@ -484,7 +484,7 @@ pub enum MontgomeryCurve {
     X448,
 }
 
-#[derive(Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(transparent)]
 pub struct ByteString {
     #[serde(deserialize_with = "vec_from_hex")]
@@ -521,7 +521,7 @@ impl AsRef<[u8]> for ByteString {
     }
 }
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(transparent)]
 pub struct LargeInteger {
     #[serde(deserialize_with = "vec_from_hex")]
