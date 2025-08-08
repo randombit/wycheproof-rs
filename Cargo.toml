@@ -12,7 +12,7 @@ rust-version = "1.57"
 
 [features]
 # By default all tests are included
-default = ["aead", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "primality", "rsa_enc", "rsa_sig", "xdh"]
+default = ["aead", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "primality", "rsa_enc", "rsa_sig", "xdh", "mldsa_sign", "mldsa_verify"]
 
 aead = []
 cipher = []
@@ -29,6 +29,8 @@ primality = []
 rsa_enc = []
 rsa_sig = []
 xdh = []
+mldsa_sign = []
+mldsa_verify = []
 
 [dependencies]
 serde = { version = "1" }
