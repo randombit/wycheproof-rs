@@ -168,3 +168,21 @@ fn test_xdh_parsing() -> Result<(), wycheproof::WycheproofError> {
     }
     Ok(())
 }
+
+#[cfg(feature = "mldsa_sign")]
+#[test]
+fn test_mldsa_sign_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::mldsa_sign::TestName::all() {
+        let _kat = wycheproof::mldsa_sign::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "mldsa_verify")]
+#[test]
+fn test_mldsa_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::mldsa_verify::TestName::all() {
+        let _kat = wycheproof::mldsa_verify::TestSet::load(test)?;
+    }
+    Ok(())
+}

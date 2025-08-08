@@ -309,7 +309,7 @@ macro_rules! define_test_set {
         pub struct TestSet {
             pub algorithm: Algorithm,
             #[serde(rename = "generatorVersion")]
-            pub generator_version: String,
+            pub generator_version: Option<String>,
             #[serde(rename = "numberOfTests")]
             pub number_of_tests: usize,
             #[serde(deserialize_with = "combine_header")]
@@ -491,6 +491,12 @@ pub struct ByteString {
     value: Vec<u8>,
 }
 
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
+pub struct Source {
+    name: String,
+    version: String,
+}
+
 impl ByteString {
     pub fn len(&self) -> usize {
         self.value.len()
@@ -613,3 +619,9 @@ pub mod rsa_pss_verify;
 
 #[cfg(feature = "xdh")]
 pub mod xdh;
+
+#[cfg(feature = "mldsa_sign")]
+pub mod mldsa_sign;
+
+#[cfg(feature = "mldsa_verify")]
+pub mod mldsa_verify;
