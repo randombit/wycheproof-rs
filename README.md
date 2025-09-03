@@ -45,3 +45,5 @@ feature flags
 * `rsa_enc`
 * `rsa_sig`
 * `xdh`
+* `mldsa-sign`
+* `mldsa-verify`
