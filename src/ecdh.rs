@@ -60,7 +60,7 @@ define_test_flags!(
     WrongOrder,
 );
 
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub enum EcdhEncoding {
     #[serde(rename = "asn")]
     Asn1,

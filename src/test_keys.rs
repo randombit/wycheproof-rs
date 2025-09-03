@@ -10,7 +10,7 @@ fn int_from_base64<'de, D: Deserializer<'de>>(deserializer: D) -> Result<LargeIn
 }
 
 #[cfg(feature = "ecdsa")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EcdsaPublicJwk {
     #[serde(rename = "crv")]
@@ -24,7 +24,7 @@ pub struct EcdsaPublicJwk {
 }
 
 #[cfg(feature = "rsa_sig")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublicJwk {
     pub alg: String,
@@ -37,7 +37,7 @@ pub struct RsaPublicJwk {
 }
 
 #[cfg(feature = "rsa_enc")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivateJwk {
     pub alg: String,
@@ -62,7 +62,7 @@ pub struct RsaPrivateJwk {
 }
 
 #[cfg(feature = "eddsa")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EddsaPublicJwk {
     #[serde(rename = "crv")]
@@ -74,7 +74,7 @@ pub struct EddsaPublicJwk {
 }
 
 #[cfg(feature = "rsa_enc")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivate {
     #[serde(rename = "publicExponent")]
@@ -96,7 +96,7 @@ pub struct RsaPrivate {
 }
 
 #[cfg(feature = "rsa_sig")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublic {
     #[serde(rename = "publicExponent")]
@@ -108,7 +108,7 @@ pub struct RsaPublic {
 define_typeid!(EcPublicKeyTypeId => "EcPublicKey");
 
 #[cfg(feature = "ecdsa")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EcdsaPublic {
     pub curve: EllipticCurve,
@@ -127,7 +127,7 @@ pub struct EcdsaPublic {
 define_typeid!(DsaPublicKeyTypeId => "DsaPublicKey");
 
 #[cfg(feature = "dsa")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DsaPublic {
     pub g: LargeInteger,
@@ -143,7 +143,7 @@ pub struct DsaPublic {
 define_typeid!(EddsaPublicKeyTypeId => "EDDSAPublicKey");
 
 #[cfg(feature = "eddsa")]
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EddsaPublic {
     pub curve: EdwardsCurve,
