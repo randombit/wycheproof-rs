@@ -18,13 +18,16 @@ define_algorithm_map!(
 
 define_test_flags!(
     BoundaryCondition,
+    HintCountOffByOne,
     IncorrectPublicKeyLength,
     IncorrectSignatureLength,
+    InfinityNormViolation,
     InvalidHintsEncoding,
     InvalidPrivateKey,
     InvalidContext,
     ManySteps,
     ModifiedSignature,
+    SampleNttEdgeCase,
     ValidSignature,
     ZeroPublicKey,
 );
@@ -35,6 +38,7 @@ define_test_group_type_id!(
 
 define_test_group!(
     "publicKey" => pubkey: ByteString,
+    "publicKeyDer" => pubkey_der: Option<ByteString>,
 );
 
 define_test!(msg: ByteString, sig: ByteString, ctx: Option<ByteString>);

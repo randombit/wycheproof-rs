@@ -97,10 +97,12 @@ fn vec_from_hex<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<u8>, D
         .map_err(D::Error::custom)
 }
 
-fn combine_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
-    let h: Vec<String> = Deserialize::deserialize(deserializer)?;
-    let combined = h.join(" ");
-    Ok(combined)
+fn default_header<'de, D: Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
+    let opt: Option<Vec<String>> = Option::deserialize(deserializer)?;
+    match opt {
+        Some(h) => Ok(h.join(" ")),
+        None => Ok(String::new()),
+    }
 }
 
 macro_rules! define_typeid {
@@ -207,6 +209,7 @@ pub enum BugType {
     KnownBug,
     Legacy,
     Malleability,
+    MissingParameter,
     MissingStep,
     ModifiedParameter,
     SignatureMalleability,
@@ -254,6 +257,8 @@ macro_rules! define_test_group {
             $(#[serde(rename = $json_name)])?
             pub $field_name: $type,
             )*
+            #[serde(default)]
+            source: Option<crate::Source>,
             #[serde(rename = "type")]
             pub test_type: TestGroupTypeId,
             pub tests: Vec<Test>,
@@ -268,6 +273,7 @@ macro_rules! define_test {
         pub struct Test {
             #[serde(rename = "tcId")]
             pub tc_id: usize,
+            #[serde(default)]
             pub comment: String,
             $(
             $(#[serde(rename = $json_name)])?
@@ -307,13 +313,14 @@ macro_rules! define_test_set {
         #[derive(Debug, Clone, Eq, PartialEq, serde_derive::Deserialize)]
         #[serde(deny_unknown_fields)]
         pub struct TestSet {
-            pub algorithm: Algorithm,
+            pub algorithm: Option<Algorithm>,
             #[serde(rename = "generatorVersion")]
             pub generator_version: Option<String>,
             #[serde(rename = "numberOfTests")]
             pub number_of_tests: usize,
-            #[serde(deserialize_with = "combine_header")]
+            #[serde(default, deserialize_with = "default_header")]
             pub header: String,
+            #[serde(default)]
             pub notes: std::collections::HashMap<TestFlag, TestFlagInfo>,
             schema: TestSchema,
             #[serde(rename = "testGroups")]
@@ -414,6 +421,19 @@ pub enum EllipticCurve {
     Brainpool384t1,
     #[serde(rename = "brainpoolP512t1")]
     Brainpool512t1,
+
+    #[serde(rename = "sect283k1")]
+    Sect283k1,
+    #[serde(rename = "sect283r1")]
+    Sect283r1,
+    #[serde(rename = "sect409k1")]
+    Sect409k1,
+    #[serde(rename = "sect409r1")]
+    Sect409r1,
+    #[serde(rename = "sect571k1")]
+    Sect571k1,
+    #[serde(rename = "sect571r1")]
+    Sect571r1,
 }
 
 /// Hash Function identifiers
@@ -493,8 +513,8 @@ pub struct ByteString {
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub struct Source {
-    name: String,
-    version: String,
+    pub name: String,
+    pub version: String,
 }
 
 impl ByteString {
@@ -625,3 +645,21 @@ pub mod mldsa_sign;
 
 #[cfg(feature = "mldsa_verify")]
 pub mod mldsa_verify;
+
+#[cfg(feature = "mlkem")]
+pub mod mlkem;
+
+#[cfg(feature = "bls")]
+pub mod bls;
+
+#[cfg(feature = "pbes2")]
+pub mod pbes2;
+
+#[cfg(feature = "pbkdf2")]
+pub mod pbkdf2;
+
+#[cfg(feature = "json_web")]
+pub mod json_web;
+
+#[cfg(feature = "rsa_sig_gen")]
+pub mod rsa_pkcs1_sig_gen;

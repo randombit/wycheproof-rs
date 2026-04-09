@@ -4,8 +4,8 @@ use super::*;
 
 define_test_set!(
     "DSA verify",
-    "dsa_verify_schema.json",
-    "dsa_p1363_verify_schema.json"
+    "dsa_verify_schema_v1.json",
+    "dsa_p1363_verify_schema_v1.json"
 );
 
 define_algorithm_map!("DSA" => Dsa);

@@ -23,7 +23,7 @@ pub struct EcdsaPublicJwk {
     pub affine_y: LargeInteger,
 }
 
-#[cfg(feature = "rsa_sig")]
+#[cfg(any(feature = "rsa_sig", feature = "rsa_sig_gen"))]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPublicJwk {
@@ -36,7 +36,7 @@ pub struct RsaPublicJwk {
     pub n: LargeInteger,
 }
 
-#[cfg(feature = "rsa_enc")]
+#[cfg(any(feature = "rsa_enc", feature = "rsa_sig_gen"))]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivateJwk {
@@ -73,7 +73,7 @@ pub struct EddsaPublicJwk {
     pub x: LargeInteger,
 }
 
-#[cfg(feature = "rsa_enc")]
+#[cfg(any(feature = "rsa_enc", feature = "rsa_sig_gen"))]
 #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RsaPrivate {
@@ -83,16 +83,16 @@ pub struct RsaPrivate {
     pub d: LargeInteger,
     #[serde(rename = "modulus")]
     pub n: LargeInteger,
-    #[serde(rename = "prime1")]
-    pub p: LargeInteger,
-    #[serde(rename = "prime2")]
-    pub q: LargeInteger,
-    #[serde(rename = "exponent1")]
-    pub d1: LargeInteger,
-    #[serde(rename = "exponent2")]
-    pub d2: LargeInteger,
-    #[serde(rename = "coefficient")]
-    pub c: LargeInteger,
+    #[serde(rename = "prime1", default)]
+    pub p: Option<LargeInteger>,
+    #[serde(rename = "prime2", default)]
+    pub q: Option<LargeInteger>,
+    #[serde(rename = "exponent1", default)]
+    pub d1: Option<LargeInteger>,
+    #[serde(rename = "exponent2", default)]
+    pub d2: Option<LargeInteger>,
+    #[serde(rename = "coefficient", default)]
+    pub c: Option<LargeInteger>,
 }
 
 #[cfg(feature = "rsa_sig")]

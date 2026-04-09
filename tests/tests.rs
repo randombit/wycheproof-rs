@@ -7,6 +7,15 @@ fn test_aead_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "bls")]
+#[test]
+fn test_bls_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::bls::TestName::all() {
+        let _kat = wycheproof::bls::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
 #[cfg(feature = "cipher")]
 #[test]
 fn test_cipher_parsing() -> Result<(), wycheproof::WycheproofError> {
@@ -88,6 +97,15 @@ fn test_hkdf_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "json_web")]
+#[test]
+fn test_json_web_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::json_web::TestName::all() {
+        let _kat = wycheproof::json_web::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
 #[cfg(feature = "keywrap")]
 #[test]
 fn test_keywrap_parsing() -> Result<(), wycheproof::WycheproofError> {
@@ -111,6 +129,33 @@ fn test_mac_parsing() -> Result<(), wycheproof::WycheproofError> {
 fn test_mac_with_nonce_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::mac_with_nonce::TestName::all() {
         let _kat = wycheproof::mac_with_nonce::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "mlkem")]
+#[test]
+fn test_mlkem_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::mlkem::TestName::all() {
+        let _kat = wycheproof::mlkem::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "pbes2")]
+#[test]
+fn test_pbes2_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::pbes2::TestName::all() {
+        let _kat = wycheproof::pbes2::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "pbkdf2")]
+#[test]
+fn test_pbkdf2_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::pbkdf2::TestName::all() {
+        let _kat = wycheproof::pbkdf2::TestSet::load(test)?;
     }
     Ok(())
 }
@@ -156,6 +201,15 @@ fn test_rsa_pkcs1_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
 fn test_rsa_pss_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     for test in wycheproof::rsa_pss_verify::TestName::all() {
         let _kat = wycheproof::rsa_pss_verify::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "rsa_sig_gen")]
+#[test]
+fn test_rsa_pkcs1_sig_gen_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::rsa_pkcs1_sig_gen::TestName::all() {
+        let _kat = wycheproof::rsa_pkcs1_sig_gen::TestSet::load(test)?;
     }
     Ok(())
 }
