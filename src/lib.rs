@@ -258,7 +258,7 @@ macro_rules! define_test_group {
             pub $field_name: $type,
             )*
             #[serde(default)]
-            source: Option<crate::Source>,
+            pub source: Option<crate::Source>,
             #[serde(rename = "type")]
             pub test_type: TestGroupTypeId,
             pub tests: Vec<Test>,
