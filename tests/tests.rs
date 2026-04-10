@@ -25,6 +25,15 @@ fn test_cipher_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "daead")]
+#[test]
+fn test_daead_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::daead::TestName::all() {
+        let _kat = wycheproof::daead::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
 #[cfg(feature = "dsa")]
 #[test]
 fn test_dsa_parsing() -> Result<(), wycheproof::WycheproofError> {

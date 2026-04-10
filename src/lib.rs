@@ -589,6 +589,9 @@ pub mod aead;
 #[cfg(feature = "cipher")]
 pub mod cipher;
 
+#[cfg(feature = "daead")]
+pub mod daead;
+
 #[cfg(feature = "dsa")]
 pub mod dsa;
 

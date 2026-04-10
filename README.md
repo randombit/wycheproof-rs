@@ -33,6 +33,7 @@ feature flags
 * `aead`
 * `bls`
 * `cipher`
+* `daead`
 * `dsa`
 * `ec`
 * `ecdh`

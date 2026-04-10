@@ -12,11 +12,12 @@ rust-version = "1.57"
 
 [features]
 # By default all tests are included
-default = ["aead", "bls", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "json_web", "keywrap", "mac", "mlkem", "pbes2", "pbkdf2", "primality", "rsa_enc", "rsa_sig", "rsa_sig_gen", "xdh", "mldsa_sign", "mldsa_verify"]
+default = ["aead", "bls", "cipher", "daead", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "json_web", "keywrap", "mac", "mlkem", "pbes2", "pbkdf2", "primality", "rsa_enc", "rsa_sig", "rsa_sig_gen", "xdh", "mldsa_sign", "mldsa_verify"]
 
 aead = []
 bls = []
 cipher = []
+daead = []
 dsa = []
 ec = []
 ecdh = []
