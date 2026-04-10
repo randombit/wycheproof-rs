@@ -11,6 +11,14 @@ env:
   CARGO_NET_GIT_FETCH_WITH_CLI: true
 
 jobs:
+  wycheproof-data:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: bash scripts/verify-wycheproof-data.sh
+
   rustfmt:
     runs-on: ubuntu-24.04
 
