@@ -4,8 +4,8 @@ use super::*;
 
 define_test_set!(
     "ECDH",
-    "ecdh_test_schema.json",
-    "ecdh_ecpoint_test_schema.json"
+    "ecdh_test_schema_v1.json",
+    "ecdh_ecpoint_test_schema_v1.json"
 );
 
 define_algorithm_map!("ECDH" => Ecdh);
@@ -45,13 +45,14 @@ define_test_flags!(
     IsomorphicPublicKey,
     GroupIsomorphism,
     LargeCofactor,
-    "Modified curve parameter" => ModifiedCurveParameter,
+    ModifiedCurveParameter,
     ModifiedCofactor,
     ModifiedGenerator,
     ModifiedGroup,
     ModifiedPrime,
     ModifiedPublicPoint,
     NegativeCofactor,
+    NoCofactor,
     Normal,
     UnnamedCurve,
     UnusedParam,

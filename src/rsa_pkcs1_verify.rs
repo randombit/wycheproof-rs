@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("RSA PKCS1 verify", "rsassa_pkcs1_verify_schema.json");
+define_test_set!("RSA PKCS1 verify", "rsassa_pkcs1_verify_schema_v1.json");
 
 define_algorithm_map!("RSASSA-PKCS1-v1_5" => RsaPkcs1v15);
 

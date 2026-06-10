@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("RSA OAEP decrypt", "rsaes_oaep_decrypt_schema.json");
+define_test_set!("RSA OAEP decrypt", "rsaes_oaep_decrypt_schema_v1.json");
 
 /*
 Currently skips:
@@ -44,6 +44,7 @@ define_test_flags!(
     InvalidCiphertext,
     InvalidOaepPadding,
     Normal,
+    SmallIntegerCiphertext,
     SmallModulus,
 );
 

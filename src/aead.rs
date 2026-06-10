@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("AEAD", "aead_test_schema.json");
+define_test_set!("AEAD", "aead_test_schema_v1.json");
 
 define_test_set_names!(
     Aegis128 => "aegis128",

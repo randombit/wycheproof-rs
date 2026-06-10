@@ -207,6 +207,7 @@ pub enum BugType {
     KnownBug,
     Legacy,
     Malleability,
+    MissingParameter,
     MissingStep,
     ModifiedParameter,
     SignatureMalleability,
@@ -256,6 +257,7 @@ macro_rules! define_test_group {
             )*
             #[serde(rename = "type")]
             pub test_type: TestGroupTypeId,
+            pub source: Option<Source>,
             pub tests: Vec<Test>,
         }
     }
@@ -268,6 +270,7 @@ macro_rules! define_test {
         pub struct Test {
             #[serde(rename = "tcId")]
             pub tc_id: usize,
+            #[serde(default)]
             pub comment: String,
             $(
             $(#[serde(rename = $json_name)])?
@@ -312,8 +315,9 @@ macro_rules! define_test_set {
             pub generator_version: Option<String>,
             #[serde(rename = "numberOfTests")]
             pub number_of_tests: usize,
-            #[serde(deserialize_with = "combine_header")]
+            #[serde(default, deserialize_with = "combine_header")]
             pub header: String,
+            #[serde(default)]
             pub notes: std::collections::HashMap<TestFlag, TestFlagInfo>,
             schema: TestSchema,
             #[serde(rename = "testGroups")]
@@ -493,8 +497,8 @@ pub struct ByteString {
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, serde_derive::Deserialize)]
 pub struct Source {
-    name: String,
-    version: String,
+    pub name: String,
+    pub version: String,
 }
 
 impl ByteString {
@@ -601,6 +605,15 @@ pub mod mac;
 
 #[cfg(feature = "mac")]
 pub mod mac_with_nonce;
+
+#[cfg(feature = "mlkem")]
+pub mod mlkem;
+
+#[cfg(feature = "pbes2")]
+pub mod pbes2;
+
+#[cfg(feature = "pbkdf2")]
+pub mod pbkdf2;
 
 #[cfg(feature = "primality")]
 pub mod primality;

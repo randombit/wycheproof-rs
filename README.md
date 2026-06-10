@@ -4,7 +4,7 @@ Wycheproof (Deserialized)
 [![crates.io](https://img.shields.io/crates/v/wycheproof.svg)](https://crates.io/crates/wycheproof)
 [![docs.rs](https://docs.rs/wycheproof/badge.svg)](https://docs.rs/wycheproof)
 
-Google's [Wycheproof](https://github.com/google/wycheproof) project is an
+Google's [Wycheproof](https://github.com/C2SP/wycheproof) project is an
 immensely useful set of tests which cover common corner cases in cryptographic
 code.
 
@@ -23,8 +23,7 @@ the minor version number.
 Comments and patches are welcome.
 
 This crate is licensed Apache 2.0-only, just as Wycheproof itself is.  The files
-in `src/data` are taken from
-[the latest Wycheproof commit](https://github.com/google/wycheproof/commit/b063b4aedae951c69df014cd25fa6d69ae9e8cb9)
+in `src/data` are taken from [Wycheproof upstream](https://github.com/C2SP/wycheproof)
 
 By default all available tests are compiled in. If you only need to test a few
 specific algorithms, you can do so with `no-default-features` plus one or more
@@ -41,9 +40,12 @@ feature flags
 * `hkdf`
 * `keywrap`
 * `mac`
+* `mldsa_sign`
+* `mldsa_verify`
+* `mlkem`
+* `pbes2`
+* `pbkdf2`
 * `primality`
 * `rsa_enc`
 * `rsa_sig`
 * `xdh`
-* `mldsa-sign`
-* `mldsa-verify`

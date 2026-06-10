@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("Cipher", "ind_cpa_test_schema.json");
+define_test_set!("Cipher", "ind_cpa_test_schema_v1.json");
 
 define_test_set_names!(
     AesCbcPkcs5 => "aes_cbc_pkcs5",
