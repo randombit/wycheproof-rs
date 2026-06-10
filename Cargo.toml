@@ -10,6 +10,23 @@ documentation = "https://docs.rs/wycheproof"
 categories = [ "cryptography" ]
 rust-version = "1.57"
 
+exclude = [
+    "src/data/aes_siv_cmac_test.json",
+    "src/data/bls_*",
+    "src/data/ecdh_*_pem_test.json",
+    "src/data/ecdh_*_webcrypto_test.json",
+    "src/data/ecdh_sect*",
+    "src/data/json_web_*",
+    "src/data/rsa_pkcs1_*_sig_gen_test.json",
+    "src/data/rsa_three_primes_*",
+    "src/data/x25519_asn_test.json",
+    "src/data/x25519_jwk_test.json",
+    "src/data/x25519_pem_test.json",
+    "src/data/x448_asn_test.json",
+    "src/data/x448_jwk_test.json",
+    "src/data/x448_pem_test.json",
+]
+
 [features]
 # By default all tests are included
 default = ["aead", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "mldsa_sign", "mldsa_verify", "mlkem", "pbes2", "pbkdf2", "primality", "rsa_enc", "rsa_sig", "xdh"]
