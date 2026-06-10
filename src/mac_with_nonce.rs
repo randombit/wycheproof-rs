@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("MAC with IV", "mac_with_iv_test_schema.json");
+define_test_set!("MAC with IV", "mac_with_iv_test_schema_v1.json");
 
 define_test_set_names!(
     Gmac => "aes_gmac",

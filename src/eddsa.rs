@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("EdDSA verify", "eddsa_verify_schema.json");
+define_test_set!("EdDSA verify", "eddsa_verify_schema_v1.json");
 
 define_test_set_names!(
     Ed25519 => "ed25519",

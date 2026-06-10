@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("RSA PKCS1 decrypt", "rsaes_pkcs1_decrypt_schema.json");
+define_test_set!("RSA PKCS1 decrypt", "rsaes_pkcs1_decrypt_schema_v1.json");
 
 define_algorithm_map!("RSAES-PKCS1-v1_5" => RsaPkcs1v15Encryption);
 
@@ -13,8 +13,8 @@ define_test_set_names!(
 );
 
 define_test_flags!(
-    "CVE 2020-14967" => LeadingZerosOnCiphertext,
-    "CVE 2021-3580" => CiphertextTooLarge,
+    "CVE-2020-14967" => LeadingZerosOnCiphertext,
+    "CVE-2021-3580" => CiphertextTooLarge,
     InvalidCiphertextFormat,
     InvalidPkcs1Padding,
     Normal,

@@ -2,7 +2,7 @@
 
 use super::*;
 
-define_test_set!("xDH", "xdh_comp_schema.json");
+define_test_set!("xDH", "xdh_comp_schema_v1.json");
 
 define_test_set_names!(
     X25519 => "x25519",

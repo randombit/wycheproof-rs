@@ -26,9 +26,11 @@ define_algorithm_map!(
 define_test_flags!(
     BoundaryCondition,
     IncorrectPrivateKeyLength,
+    Internal,
     InvalidPrivateKey,
     InvalidContext,
     ManySteps,
+    Randomized,
     ValidSignature,
 );
 
@@ -37,9 +39,16 @@ define_test_group_type_id!(
 );
 
 define_test_group!(
+    "publicKey" => pubkey: Option<ByteString>,
     "privateKey" => privkey: Option<ByteString>,
+    "privateKeyPkcs8" => privkey_pkcs8: Option<ByteString>,
     "privateSeed" => privseed: Option<ByteString>,
-    "source" => source: Source,
 );
 
-define_test!(msg: ByteString, sig: ByteString, ctx: Option<ByteString>);
+define_test!(
+    msg: Option<ByteString>,
+    mu: Option<ByteString>,
+    rnd: Option<ByteString>,
+    sig: ByteString,
+    ctx: Option<ByteString>,
+);

@@ -186,3 +186,30 @@ fn test_mldsa_verify_parsing() -> Result<(), wycheproof::WycheproofError> {
     }
     Ok(())
 }
+
+#[cfg(feature = "mlkem")]
+#[test]
+fn test_mlkem_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::mlkem::TestName::all() {
+        let _kat = wycheproof::mlkem::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "pbes2")]
+#[test]
+fn test_pbes2_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::pbes2::TestName::all() {
+        let _kat = wycheproof::pbes2::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "pbkdf2")]
+#[test]
+fn test_pbkdf2_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::pbkdf2::TestName::all() {
+        let _kat = wycheproof::pbkdf2::TestSet::load(test)?;
+    }
+    Ok(())
+}

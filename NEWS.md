@@ -1,3 +1,10 @@
+## 0.7.0 Not Yet Released
+
+* Minor version bump due to several test data sets being removed upstream, which
+  required removing enums associated with the now removed test data.
+
+* Update to the latest version of the Wycheproof test data.
+
 ## 0.6.0 2024-08-27
 
 * Avoid inlining of the test data, which more completely resolves the

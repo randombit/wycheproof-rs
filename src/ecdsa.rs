@@ -4,8 +4,8 @@ use super::*;
 
 define_test_set!(
     "ECDSA verify",
-    "ecdsa_verify_schema.json",
-    "ecdsa_p1363_verify_schema.json",
+    "ecdsa_verify_schema_v1.json",
+    "ecdsa_p1363_verify_schema_v1.json",
     "ecdsa_bitcoin_verify_schema.json"
 );
 
@@ -71,7 +71,6 @@ define_test_set_names!(
     EcdsaSecp256r1Sha512 => "ecdsa_secp256r1_sha512",
     EcdsaSecp256r1Shake128P1363 => "ecdsa_secp256r1_shake128_p1363",
     EcdsaSecp256r1Shake128 => "ecdsa_secp256r1_shake128",
-    EcdsaSecp256r1Webcrypto => "ecdsa_secp256r1_webcrypto",
     EcdsaSecp384r1Sha256 => "ecdsa_secp384r1_sha256",
     EcdsaSecp384r1Sha3_384 => "ecdsa_secp384r1_sha3_384",
     EcdsaSecp384r1Sha3_512 => "ecdsa_secp384r1_sha3_512",
@@ -81,13 +80,11 @@ define_test_set_names!(
     EcdsaSecp384r1Sha512 => "ecdsa_secp384r1_sha512",
     EcdsaSecp384r1Shake256P1363 => "ecdsa_secp384r1_shake256_p1363",
     EcdsaSecp384r1Shake256 => "ecdsa_secp384r1_shake256",
-    EcdsaSecp384r1Webcrypto => "ecdsa_secp384r1_webcrypto",
     EcdsaSecp521r1Sha3_512 => "ecdsa_secp521r1_sha3_512",
     EcdsaSecp521r1Sha512P1363 => "ecdsa_secp521r1_sha512_p1363",
     EcdsaSecp521r1Sha512 => "ecdsa_secp521r1_sha512",
     EcdsaSecp521r1Shake256P1363 => "ecdsa_secp521r1_shake256_p1363",
     EcdsaSecp521r1Shake256 => "ecdsa_secp521r1_shake256",
-    EcdsaSecp521r1Webcrypto => "ecdsa_secp521r1_webcrypto",
 );
 
 define_test_flags!(
