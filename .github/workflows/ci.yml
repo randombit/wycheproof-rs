@@ -13,14 +13,13 @@ permissions:
 
 env:
   CARGO_NET_GIT_FETCH_WITH_CLI: true
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   provenance:
     name: vector provenance
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - run: scripts/verify-wycheproof-data-offline.sh
       - run: scripts/verify-wycheproof-data.sh
@@ -31,7 +30,7 @@ jobs:
     runs-on: ubuntu-24.04
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - run: scripts/check-wycheproof-drift.sh
 
@@ -39,7 +38,7 @@ jobs:
     name: rustfmt
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -49,7 +48,7 @@ jobs:
     name: clippy
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -63,7 +62,7 @@ jobs:
       matrix:
         toolchain: [stable, beta, nightly, 1.85.0]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -75,7 +74,7 @@ jobs:
     name: minimal downstream imports
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - run: scripts/verify-minimal-imports.sh
 
@@ -83,7 +82,7 @@ jobs:
     name: package sizes
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - run: scripts/verify-package-sizes.sh
       - run: scripts/publish-workspace.sh --dry-run

@@ -14,14 +14,13 @@ permissions:
 
 env:
   CARGO_NET_GIT_FETCH_WITH_CLI: true
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   release-dry-run:
     name: verify release artifacts
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -57,7 +56,7 @@ jobs:
         run: scripts/publish-workspace.sh --dry-run
 
       - name: Upload packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: crates
           path: target/package/*.crate
