@@ -5,6 +5,8 @@
 
 * Update to the latest version of the Wycheproof test data.
 
+* MSRV bumped to 1.71 due to MSRV changes in dependencies.
+
 ## 0.6.0 2024-08-27
 
 * Avoid inlining of the test data, which more completely resolves the
