@@ -1,0 +1,26 @@
+[package]
+name = "wycheproof-ng"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jack Lloyd <jack@randombit.net>", "Francois Garillot <francois@garillot.net>"]
+license = "Apache-2.0"
+repository = "https://github.com/huitseeker/wycheproof-ng-rs"
+categories = ["cryptography"]
+rust-version = "1.85"
+description = "Umbrella re-exports for the Wycheproof NG test vector crates"
+documentation = "https://docs.rs/wycheproof-ng"
+
+[dependencies]
+wycheproof-ng-aead = { path = "../aead", version = "0.1.0" }
+wycheproof-ng-bls = { path = "../bls", version = "0.1.0" }
+wycheproof-ng-dh = { path = "../dh", version = "0.1.0" }
+wycheproof-ng-dsa = { path = "../dsa", version = "0.1.0" }
+wycheproof-ng-ecdsa = { path = "../ecdsa", version = "0.1.0" }
+wycheproof-ng-eddsa = { path = "../eddsa", version = "0.1.0" }
+wycheproof-ng-fpe = { path = "../fpe", version = "0.1.0" }
+wycheproof-ng-kdf-jose = { path = "../kdf-jose", version = "0.1.0" }
+wycheproof-ng-mldsa = { path = "../mldsa", version = "0.1.0" }
+wycheproof-ng-mlkem = { path = "../mlkem", version = "0.1.0" }
+wycheproof-ng-rsa-encryption = { path = "../rsa-encryption", version = "0.1.0" }
+wycheproof-ng-rsa-signature = { path = "../rsa-signature", version = "0.1.0" }
+wycheproof-ng-symmetric = { path = "../symmetric", version = "0.1.0" }

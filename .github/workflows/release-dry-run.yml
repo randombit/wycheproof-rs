@@ -1,0 +1,59 @@
+name: release dry run
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - Cargo.toml
+      - crates/**
+      - scripts/**
+      - .github/workflows/**
+
+permissions:
+  contents: read
+
+jobs:
+  release-dry-run:
+    name: verify release artifacts
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Verify vectors offline
+        run: scripts/verify-wycheproof-data-offline.sh
+
+      - name: Verify vectors against pinned upstream
+        run: scripts/verify-wycheproof-data.sh
+
+      - name: Format
+        run: cargo fmt --all -- --check
+
+      - name: Lint
+        run: cargo clippy --workspace --all-targets -- --deny warnings
+
+      - name: Test
+        run: cargo test --workspace --all-targets
+
+      - name: Docs
+        run: cargo doc --workspace --no-deps
+
+      - name: Minimal downstream imports
+        run: scripts/verify-minimal-imports.sh
+
+      - name: Package size budget
+        run: scripts/verify-package-sizes.sh
+
+      - name: Verify package artifacts
+        run: scripts/publish-workspace.sh --dry-run
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: crates
+          path: target/package/*.crate

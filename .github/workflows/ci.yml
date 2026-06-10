@@ -2,67 +2,84 @@ name: ci
 
 on:
   push:
-    branches: [ master ]
+    branches: [main, master, updates]
   pull_request:
-    branches: [ master ]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 * * 1"
 
 env:
-  # https://github.com/rust-lang/cargo/issues/11014
   CARGO_NET_GIT_FETCH_WITH_CLI: true
 
 jobs:
-  wycheproof-data:
+  provenance:
+    name: vector provenance
     runs-on: ubuntu-24.04
-
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: scripts/verify-wycheproof-data-offline.sh
+      - run: scripts/verify-wycheproof-data.sh
 
-      - run: bash scripts/verify-wycheproof-data.sh
+  upstream-drift:
+    name: upstream drift
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: scripts/check-wycheproof-drift.sh
 
   rustfmt:
+    name: rustfmt
     runs-on: ubuntu-24.04
-
     steps:
-      - uses: dtolnay/rust-toolchain@master
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: nightly
           components: rustfmt
+      - run: cargo fmt --all -- --check
 
-      - uses: actions/checkout@v4
-
-      - run: cargo fmt -- --check
   clippy:
+    name: clippy
     runs-on: ubuntu-24.04
-
     steps:
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: nightly
-          components: clippy
-
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - run: cargo clippy --workspace --all-targets -- --deny warnings
 
-      - run: cargo +nightly clippy -- --deny warnings
-  ci:
+  test:
+    name: test (${{ matrix.toolchain }})
     runs-on: ubuntu-24.04
-
     strategy:
       fail-fast: false
-
       matrix:
-        include:
-          - toolchain: stable
-          - toolchain: beta
-          - toolchain: nightly
-          - toolchain: 1.57.0   # MSRV
-
+        toolchain: [stable, beta, nightly, 1.85.0]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
-      - run: cargo test
-      - run: cargo test --no-default-features
-      - run: cargo test --no-default-features --features=aead
-      - run: cargo test --no-default-features --features=ecdsa
-      - run: cargo test --no-default-features --features=rsa_sig
+      - run: cargo test --workspace
+      - run: cargo test --workspace --all-targets
+      - run: cargo doc --workspace --no-deps
+
+  minimal-imports:
+    name: minimal downstream imports
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: scripts/verify-minimal-imports.sh
+
+  package-sizes:
+    name: package sizes
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: scripts/verify-package-sizes.sh
+      - run: scripts/publish-workspace.sh --dry-run

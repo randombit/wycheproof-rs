@@ -1,0 +1,17 @@
+[package]
+name = "wycheproof-ng-rsa-signature"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jack Lloyd <jack@randombit.net>", "Francois Garillot <francois@garillot.net>"]
+license = "Apache-2.0"
+repository = "https://github.com/huitseeker/wycheproof-ng-rs"
+categories = ["cryptography"]
+rust-version = "1.85"
+description = "RSA signature Wycheproof test vectors for Wycheproof NG"
+documentation = "https://docs.rs/wycheproof-ng-rsa-signature"
+
+[dependencies]
+serde = "1"
+serde_derive = "1"
+serde_json = "1"
+wycheproof-ng-core = { path = "../core", version = "0.1.0" }

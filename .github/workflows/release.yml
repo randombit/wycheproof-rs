@@ -1,0 +1,89 @@
+name: release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release tag to publish, for example v0.1.0"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crates-io-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: publish crate family
+    runs-on: ubuntu-24.04
+    environment: crates-io
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      RELEASE_TAG: ${{ github.event.release.tag_name || inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name || inputs.version }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Validate release tag
+        run: |
+          set -euo pipefail
+          if [[ -z "${RELEASE_TAG}" ]]; then
+            echo "missing release tag" >&2
+            exit 1
+          fi
+          git fetch --tags --force
+          tag_commit="$(git rev-parse "${RELEASE_TAG}^{commit}")"
+          head_commit="$(git rev-parse HEAD)"
+          if [[ "${tag_commit}" != "${head_commit}" ]]; then
+            echo "checkout ${head_commit} does not match ${RELEASE_TAG} (${tag_commit})" >&2
+            exit 1
+          fi
+
+      - name: Verify vectors offline
+        run: scripts/verify-wycheproof-data-offline.sh
+
+      - name: Verify vectors against pinned upstream
+        run: scripts/verify-wycheproof-data.sh
+
+      - name: Format
+        run: cargo fmt --all -- --check
+
+      - name: Lint
+        run: cargo clippy --workspace --all-targets -- --deny warnings
+
+      - name: Test
+        run: cargo test --workspace --all-targets
+
+      - name: Docs
+        run: cargo doc --workspace --no-deps
+
+      - name: Minimal downstream imports
+        run: scripts/verify-minimal-imports.sh
+
+      - name: Check package size budget
+        run: scripts/verify-package-sizes.sh
+
+      - name: Verify package artifacts
+        run: scripts/publish-workspace.sh --dry-run
+
+      - name: Authenticate to crates.io
+        id: auth
+        uses: rust-lang/crates-io-auth-action@v1
+
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+        run: scripts/publish-workspace.sh --publish

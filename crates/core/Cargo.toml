@@ -1,0 +1,17 @@
+[package]
+name = "wycheproof-ng-core"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jack Lloyd <jack@randombit.net>", "Francois Garillot <francois@garillot.net>"]
+license = "Apache-2.0"
+repository = "https://github.com/huitseeker/wycheproof-ng-rs"
+categories = ["cryptography"]
+rust-version = "1.85"
+description = "Shared types and parsing helpers for Wycheproof NG test vector crates"
+documentation = "https://docs.rs/wycheproof-ng-core"
+
+[dependencies]
+data-encoding = "2"
+serde = "1"
+serde_derive = "1"
+num-bigint = { version = "0.4", optional = true }
