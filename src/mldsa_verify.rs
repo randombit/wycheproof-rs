@@ -26,6 +26,7 @@ define_test_flags!(
     InvalidContext,
     InvalidSignature,
     ManySteps,
+    MissingReduction,
     ModifiedSignature,
     ValidSignature,
     ZeroPublicKey,
