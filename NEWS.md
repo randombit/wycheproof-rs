@@ -1,9 +1,14 @@
-## 0.7.0 Not Yet Released
+## 0.7.0 2026-09-10
 
 * Minor version bump due to several test data sets being removed upstream, which
   required removing enums associated with the now removed test data.
 
-* Update to the latest version of the Wycheproof test data.
+* Update to the latest version of the Wycheproof test data (as of 2026-09-10)
+
+* Add support for the C2SP chunked encryption ("Cobblestone") test vectors via
+  the new `chunked_encryption` feature and module.
+
+* Add support for the Ascon-AEAD128 (NIST SP 800-232) AEAD test vectors.
 
 * MSRV bumped to 1.71 due to MSRV changes in dependencies.
 

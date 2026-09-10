@@ -29,9 +29,10 @@ exclude = [
 
 [features]
 # By default all tests are included
-default = ["aead", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "mldsa_sign", "mldsa_verify", "mlkem", "pbes2", "pbkdf2", "primality", "rsa_enc", "rsa_sig", "xdh"]
+default = ["aead", "chunked_encryption", "cipher", "dsa", "ec", "ecdh", "ecdsa", "eddsa", "fpe", "hkdf", "keywrap", "mac", "mldsa_sign", "mldsa_verify", "mlkem", "pbes2", "pbkdf2", "primality", "rsa_enc", "rsa_sig", "xdh"]
 
 aead = []
+chunked_encryption = []
 cipher = []
 dsa = []
 ec = []

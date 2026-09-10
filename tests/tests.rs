@@ -7,6 +7,15 @@ fn test_aead_parsing() -> Result<(), wycheproof::WycheproofError> {
     Ok(())
 }
 
+#[cfg(feature = "chunked_encryption")]
+#[test]
+fn test_chunked_encryption_parsing() -> Result<(), wycheproof::WycheproofError> {
+    for test in wycheproof::chunked_encryption::TestName::all() {
+        let _kat = wycheproof::chunked_encryption::TestSet::load(test)?;
+    }
+    Ok(())
+}
+
 #[cfg(feature = "cipher")]
 #[test]
 fn test_cipher_parsing() -> Result<(), wycheproof::WycheproofError> {

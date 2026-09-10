@@ -30,6 +30,7 @@ specific algorithms, you can do so with `no-default-features` plus one or more
 feature flags
 
 * `aead`
+* `chunked_encryption`
 * `cipher`
 * `dsa`
 * `ec`

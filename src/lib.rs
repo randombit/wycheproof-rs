@@ -570,6 +570,9 @@ pub use test_keys::*;
 #[cfg(feature = "aead")]
 pub mod aead;
 
+#[cfg(feature = "chunked_encryption")]
+pub mod chunked_encryption;
+
 #[cfg(feature = "cipher")]
 pub mod cipher;
 

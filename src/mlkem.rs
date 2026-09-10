@@ -31,6 +31,7 @@ define_test_flags!(
     IncorrectCiphertextLength,
     IncorrectDecapsulationKeyLength,
     InvalidDecapsulationKey,
+    MalleableCiphertext,
     ModulusOverflow,
     Strcmp,
 );
